@@ -13,8 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('fasilperpuses', function (Blueprint $table) {
+        Schema::create('pimpinans', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('masjid_id')->unsigned();
+            $table->foreign('masjid_id')->references('id')->on('masjid')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('pimpinan');
+            $table->string('jmlhpengurus');
+            $table->string('imam');
             $table->timestamps();
         });
     }
@@ -26,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fasilperpuses');
+        Schema::dropIfExists('pimpinans');
     }
 };
