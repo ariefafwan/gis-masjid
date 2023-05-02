@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('masjids', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('alamat');
             $table->float('luastanah');
             $table->string('statustanah');
             $table->float('luastbangunan');

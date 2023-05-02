@@ -37,7 +37,7 @@ class Masjid extends Model
 
     public function sejarah()
     {
-        return $this->hasMany(Sejarah::class);
+        return $this->hasOne(Sejarah::class);
     }
 
     public function dokumen()
@@ -47,7 +47,7 @@ class Masjid extends Model
 
     public function pimpinan()
     {
-        return $this->hasMany(Pimpinan::class);
+        return $this->hasOne(Pimpinan::class);
     }
 
 }
