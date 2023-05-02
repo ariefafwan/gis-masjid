@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('pimpinans', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('masjid_id')->unsigned();
-            $table->foreign('masjid_id')->references('id')->on('masjid')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('masjid_id')->references('id')->on('masjids')->onDelete('cascade')->onUpdate('cascade');
             $table->string('pimpinan');
             $table->string('jmlhpengurus');
             $table->string('imam');
