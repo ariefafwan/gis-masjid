@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('statustanah');
             $table->float('luastbangunan');
             $table->bigInteger('dayatampung');
+            $table->string('latitude');
+            $table->string('longitude');
             $table->timestamps();
         });
     }

@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Fasildisabili extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+    protected $with = ['masjid'];
+
+    public function masjid()
+    {
+        return $this->belongsTo(Masjid::class);
+    }
 }
