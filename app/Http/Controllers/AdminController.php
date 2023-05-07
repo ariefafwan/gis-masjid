@@ -16,10 +16,17 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminController extends Controller
 {
+    public function dashboard()
+    {
+        $page = "Dashboard";
+        $dt1 = Masjid::get()->count();
+        return view('admin.dashboard', compact('page', 'dt1'));
+    }
+    
     public function index()
     {
         $page = "Daftar Masjid";
-        $masjid = Masjid::all();
+        $masjid = Masjid::latest()->paginate(10);
         return view('admin.masjid.index', compact('page', 'masjid'));
     }
 
