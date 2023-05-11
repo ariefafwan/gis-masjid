@@ -16,7 +16,7 @@
             <form class="form-horizontal style-form" style="margin-top: 10px;" action="{{ route('storemasjid') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                    <label for="name">Nama Madjid</label>
+                    <label for="name">Nama Masjid</label>
                     <input type="text" name="name" class="form-control" id="name" required>
                 </div>
                 <div class="form-group">
@@ -32,6 +32,17 @@
                     <input type="number" name="dayatampung" class="form-control" id="dayatampung" required>
                 </div>
                 <div class="form-group">
+                    <label for="pembangunan">Skala Pembangunan (%)</label>
+                    <select class="form-select" id="pembangunan" aria-label="Default select example" name="pembangunan" required>
+                        <option selected>-- Pilih Skala Pembangunan --</option>
+                        <option value="#781804">1-20</option>
+                        <option value="#CB2602">21-40</option>
+                        <option value="#DE3611">41-60</option>
+                        <option value="#E35131">61-80</option>
+                        <option value="#EE6548">81-100</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="latitude">Latitude</label>
                     <input type="text" name="latitude" class="form-control" id="latitude" required>
                 </div>
@@ -40,7 +51,7 @@
                     <input type="text" name="longitude" class="form-control" id="longitude" required>
                 </div>
                 <div class="form-group">
-                    <label for="longitude">File GeoJSON</label>
+                    <label for="geojson">File GeoJSON</label>
                     <input type="file" id="geojson" name="geojson" class="form-control align-item center" required>
                 </div>
                 <div class="box-footer mt-2">

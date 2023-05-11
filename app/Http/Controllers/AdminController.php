@@ -51,6 +51,7 @@ class AdminController extends Controller
         $dtUpload->dayatampung = $request->dayatampung;
         $dtUpload->latitude = $request->latitude;
         $dtUpload->longitude = $request->longitude;
+        $dtUpload->pembangunan = $request->pembangunan;
         $dtUpload->geojson = $namaFile;
         $dtUpload->save();
 
@@ -61,9 +62,16 @@ class AdminController extends Controller
 
     public function editmasjid($id)
     {
-        $page = "Detail Madjid";
+        $page = "Profile Masjid";
         $masjid = Masjid::findOrFail($id);
-        return view('admin.masjid.edit', compact('page', 'masjid'));
+        $fasilumum = Fasilumum::where('masjid_id', $id)->get();
+        $fasilanak = Fasilanak::where('masjid_id', $id)->get();
+        $fasildisabilitas = Fasildisabili::where('masjid_id', $id)->get();
+        $kegiatan = Kegiatan::where('masjid_id', $id)->get();
+        $pimpinan = Pimpinan::where('masjid_id', $id)->get();
+        $foto = Foto::where('masjid_id', $id)->get();
+        return view('admin.masjid.edit', 
+            compact('page', 'masjid', 'fasilumum', 'fasilanak','fasildisabilitas', 'kegiatan', 'pimpinan', 'foto'));
     }
 
     public function masjid()
@@ -106,129 +114,181 @@ class AdminController extends Controller
     }
 
     //fasilanak
-    public function fasilanak()
+    public function fasilanak($id)
     {
-        $page = "Tambah Fasilitas Ramah Anak Masjid";
-        $fasilanak = Fasilanak::latest()->paginate(10);
-        return view('admin.masjid.fasilanak.create', compact('fasilanak', 'page'));
+        $masjid = Masjid::findOrFail($id);
+        $page = "Tambah Fasilitas Ramah Anak Masjid $masjid->name";
+        return view('admin.masjid.fasilanak.create', compact('page', 'masjid'));
     }
 
     public function storefasilanak(Request $request)
     {
+        $masjid = $request->masjid_id;
+
         $dtUpload = new Fasilanak();
         $dtUpload->masjid_id = $request->masjid_id;
         $dtUpload->name = $request->name;
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Fasilitas Ramah Anak Baru Berhasil ditambahkan');
-        return redirect()->route('masjid');
+        return redirect()->route('editmasjid', $masjid);
+    }
+
+    public function editfasilanak($id)
+    {
+        $fasilanak = Fasilanak::findOrFail($id);
+        $page = "Tambah Fasilitas Ramah Anak Masjid";
+        return view('admin.masjid.fasilanak.create', compact('page', 'fasilanak'));
+    }
+
+    public function updatefasilanak(Request $request, $id)
+    {
+        $masjid = $request->masjid_id;
+
+        $dtUpload = Fasilanak::findOrFail($id);
+        $dtUpload->masjid_id = $request->masjid_id;
+        $dtUpload->name = $request->name;
+        $dtUpload->save();
+
+        Alert::success('Informasi Pesan!', 'Fasilitas Ramah Anak Berhasil diupdate');
+        return redirect()->route('editmasjid', $masjid);
     }
 
     //fasilumum
-    public function fasilumum()
+    public function fasilumum($id)
     {
-        $page = "Tambah Fasilitas Umum Masjid";
-        $fasilumum = Fasilumum::latest()->paginate(10);
-        return view('admin.masjid.fasilumum.create', compact('fasilumum', 'page'));
+        $masjid = Masjid::findOrFail($id);
+        $page = "Tambah Fasilitas Umum Masjid $masjid->name";
+        return view('admin.masjid.fasilumum.create', compact('page', 'masjid'));
     }
 
     public function storefasilumum(Request $request)
     {
+        $masjid = $request->masjid_id;
+
         $dtUpload = new Fasilumum();
         $dtUpload->masjid_id = $request->masjid_id;
         $dtUpload->name = $request->name;
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Fasilitas Umum Baru Berhasil ditambahkan');
-        return redirect()->route('masjid');
+        return redirect()->route('editmasjid', $masjid);
+    }
+
+    public function ediitfasilumum($id)
+    {
+        $fasilumum = Fasilumum::findOrFail($id);
+        $page = "Tambah Fasilitas Umum Masjid";
+        return view('admin.masjid.fasilumum.edit', compact('page', 'fasilumum'));
+    }
+
+    public function updatefasilumum(Request $request, $id)
+    {
+        $masjid = $request->masjid_id;
+
+        $dtUpload = Fasilumum::findOrFail($id);
+        $dtUpload->masjid_id = $request->masjid_id;
+        $dtUpload->name = $request->name;
+        $dtUpload->save();
+
+        Alert::success('Informasi Pesan!', 'Fasilitas Umum Berhasil diupdate');
+        return redirect()->route('editmasjid', $masjid);
     }
 
     //fasildisabilitas
-    public function fasildisabilitas()
+    public function fasildisabilitas($id)
     {
-        $page = "Tambah Fasilitas Disabilitas Masjid";
-        $fasildisabilitas = Fasildisabili::latest()->paginate(10);
-        return view('admin.masjid.fasildisabilitas.create', compact('fasildisabilitas', 'page'));
+        $masjid = Masjid::findOrFail($id);
+        $page = "Tambah Fasilitas Disabilitas Masjid $masjid->name";
+        return view('admin.masjid.fasildisabilitas.create', compact('page', 'masjid'));
     }
 
     public function storefasildisabilitas(Request $request)
     {
+        $masjid = $request->masjid_id;
+        
         $dtUpload = new Fasildisabili();
         $dtUpload->masjid_id = $request->masjid_id;
         $dtUpload->name = $request->name;
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Fasilitas Disabilitas Baru Berhasil ditambahkan');
-        return redirect()->route('masjid');
+        return redirect()->route('editmasjid', $masjid);
+    }
+
+    public function editfasildisabilitas($id)
+    {
+        $fasildisabilitas = Fasildisabili::findOrFail($id);
+        $page = "Tambah Fasilitas Disabilitas Masjid";
+        return view('admin.masjid.fasildisabilitas.edit', compact('page', 'fasildisabilitas'));
+    }
+
+    public function updatefasildisabilitas(Request $request, $id)
+    {
+        $masjid = $request->masjid_id;
+        
+        $dtUpload = Fasildisabili::findOrFail($id);
+        $dtUpload->masjid_id = $request->masjid_id;
+        $dtUpload->name = $request->name;
+        $dtUpload->save();
+
+        Alert::success('Informasi Pesan!', 'Fasilitas Disabilitas Berhasil diupdate');
+        return redirect()->route('editmasjid', $masjid);
     }
 
     //kegiatan
-    public function kegiatan()
+    public function kegiatan($id)
     {
-        $page = "Tambah Kegiatan Umum Masjid";
-        $kegiatan = Kegiatan::latest()->paginate(10);
-        return view('admin.masjid.kegiatan.create', compact('kegiatan', 'page'));
+        $masjid = Masjid::findOrFail($id);
+        $page = "Tambah Kegiatan Umum Masjid $masjid->name";
+        return view('admin.masjid.kegiatan.create', compact('page', 'masjid'));
     }
 
     public function storekegiatan(Request $request)
     {
+        $masjid = $request->masjid_id;
+
         $dtUpload = new Kegiatan();
         $dtUpload->masjid_id = $request->masjid_id;
         $dtUpload->name = $request->name;
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Kegiatan Masjid Baru Berhasil ditambahkan');
-        return redirect()->route('masjid');
+        return redirect()->route('editmasjid', $masjid);
     }
 
-    //dokumen
-    public function dokumen()
+    public function editkegiatan($id)
     {
-        $page = "Tambah Dokumen Umum Masjid";
-        $dokumen = Dokumen::latest()->paginate(10);
-        return view('admin.masjid.dokumen.create', compact('dokumen', 'page'));
+        $kegiatan = Kegiatan::findOrFail($id);
+        $page = "Tambah Kegiatan Umum Masjid";
+        return view('admin.masjid.kegiatan.edit', compact('page', 'kegiatan'));
     }
 
-    public function storedokumen(Request $request)
+    public function updatekegiatan(Request $request, $id)
     {
-        $dtUpload = new Dokumen();
+        $masjid = $request->masjid_id;
+
+        $dtUpload = Kegiatan::findOrFail($id);
         $dtUpload->masjid_id = $request->masjid_id;
         $dtUpload->name = $request->name;
         $dtUpload->save();
 
-        Alert::success('Informasi Pesan!', 'Dokumen Masjid Baru Berhasil ditambahkan');
-        return redirect()->route('masjid');
-    }
-
-    //sejarah
-    public function sejarah()
-    {
-        $page = "Tambah Sejarah Umum Masjid";
-        $sejarah = Sejarah::latest()->paginate(10);
-        return view('admin.masjid.sejarah.create', compact('sejarah', 'page'));
-    }
-
-    public function storesejarah(Request $request)
-    {
-        $dtUpload = new Sejarah();
-        $dtUpload->masjid_id = $request->masjid_id;
-        $dtUpload->sejarah = $request->sejarah;
-        $dtUpload->save();
-
-        Alert::success('Informasi Pesan!', 'Sejarah Masjid Baru Berhasil ditambahkan');
-        return redirect()->route('masjid');
+        Alert::success('Informasi Pesan!', 'Kegiatan Masjid Berhasil diupdate');
+        return redirect()->route('editmasjid', $masjid);
     }
 
     //pimpinan
-    public function pimpinan()
+    public function pimpinan($id)
     {
-        $page = "Tambah Pimpinan Masjid";
-        $pimpinan = Sejarah::latest()->paginate(10);
-        return view('admin.masjid.pimpinan.create', compact('pimpinan', 'page'));
+        $masjid = Masjid::findOrFail($id);
+        $page = "Tambah Pimpinan Masjid $masjid->name";
+        return view('admin.masjid.pimpinan.create', compact('page', 'masjid'));
     }
 
     public function storepimpinan(Request $request)
     {
+        $masjid = $request->masjid_id;
+
         $dtUpload = new Pimpinan();
         $dtUpload->masjid_id = $request->masjid_id;
         $dtUpload->pimpinan = $request->pimpinan;
@@ -237,25 +297,75 @@ class AdminController extends Controller
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Pimpinan Masjid Baru Berhasil ditambahkan');
-        return redirect()->route('masjid');
+        return redirect()->route('editmasjid', $masjid);
+    }
+
+    public function editpimpinan($id)
+    {
+        $pimpinan = Pimpinan::findOrFail($id);
+        $page = "Tambah Pimpinan Masjid";
+        return view('admin.masjid.pimpinan.edit', compact('page', 'pimpinan'));
+    }
+
+    public function updatepimpinan(Request $request, $id)
+    {
+        $masjid = $request->masjid_id;
+
+        $dtUpload = Pimpinan::findOrFail($id);
+        $dtUpload->masjid_id = $request->masjid_id;
+        $dtUpload->pimpinan = $request->pimpinan;
+        $dtUpload->jmlhpengurus = $request->jmlhpengurus;
+        $dtUpload->imam = $request->imam;
+        $dtUpload->save();
+
+        Alert::success('Informasi Pesan!', 'Pimpinan Masjid Berhasil Diupdate');
+        return redirect()->route('editmasjid', $masjid);
     }
 
     //foto
-    public function foto()
+    public function foto($id)
     {
-        $page = "Tambah Galeri Masjid";
-        $foto = Foto::latest()->paginate(10);
-        return view('admin.masjid.foto.create', compact('foto', 'page'));
+        $masjid = Masjid::findOrFail($id);
+        $page = "Tambah Galeri Masjid $masjid->name";
+        return view('admin.masjid.foto.create', compact('page', 'masjid'));
     }
 
     public function storefoto(Request $request)
     {
+        $masjid = $request->masjid_id;
+        $nm = $request->galeri;
+        $namaFile = $nm->getClientOriginalName();
+        
         $dtUpload = new Foto();
         $dtUpload->masjid_id = $request->masjid_id;
-        $dtUpload->galeri = $request->galeri;
+        $dtUpload->galeri = $namaFile;
         $dtUpload->save();
 
+        $nm->move(public_path() . '/storage/galeri', $namaFile);
         Alert::success('Informasi Pesan!', 'Galeri Masjid Baru Berhasil ditambahkan');
-        return redirect()->route('masjid');
+        return redirect()->route('editmasjid', $masjid);
+    }
+
+    public function editfoto($id)
+    {
+        $foto = Foto::findOrFail($id);
+        $page = "Edit Galeri Masjid";
+        return view('admin.masjid.foto.edit', compact('page', 'foto'));
+    }
+
+    public function uploadfoto(Request $request, $id)
+    {
+        $masjid = $request->masjid_id;
+        $nm = $request->galeri;
+        $namaFile = $nm->getClientOriginalName();
+        
+        $dtUpload = Foto::findOrFail($id);
+        $dtUpload->masjid_id = $request->masjid_id;
+        $dtUpload->galeri = $namaFile;
+        $dtUpload->save();
+
+        $nm->move(public_path() . '/storage/galeri', $namaFile);
+        Alert::success('Informasi Pesan!', 'Galeri Masjid Berhasil Diupdate');
+        return redirect()->route('editmasjid', $masjid);
     }
 }

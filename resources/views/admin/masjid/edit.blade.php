@@ -1,106 +1,386 @@
 @extends('admin.app')
 
 @section('body')
-<section class="about-info-area section-gap">
-    <div class="container" style="padding-top: 120px;">
+<section class="content">
+    <div class="container">
       <div class="row">
-  
-        <div class="col-md-7" data-aos="fade-up" data-aos-delay="200">
-          <div class="panel panel-info panel-dashboard">
-            <div class="panel-heading centered">
-              <h2 class="panel-title"><strong>Informasi Umum Masjid </strong></h4>
-            </div>
-            <div class="panel-body">
-              <table class="table">
-                <tr>
-                  <!-- <th>Item</th> -->
-                  <th>Detail</th>
-                </tr>
-                <tr>
-                  <td>Nama Wisata</td>
-                  <td>
-                    <h5>{{ $masjid->name }}</h5>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Alamat</td>
-                  <td>
-                    <h5>{{ $masjid->alamat }}</h5>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Luas Bangunan</td>
-                  <td>
-                    <h5>{{ $masjid->luasbangunan }}</h5>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Daya Tampung</td>
-                  <td>
-                    <h5>{{ $masjid->dayatampung }}</h5>
-                    <input class="latitude" type="hidden" id="latitude" value="{{ $masjid->latitude }}">
-                    <input class="longitude" type="hidden" id="longitude" value="{{ $masjid->longitude }}">
-                  </td>
-                </tr>
-              </table>
+        
+        <div class="col-md-12">
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Nama Masjid</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{ $masjid->name }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Alamat</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{ $masjid->alamat }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Daya Tampung</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{ $masjid->dayatampung }} Jiwa
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Luas Bangunan</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{ $masjid->luasbangunan }} M<sup>2</sup>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Skala Pembangunan</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{ $masjid->PembangunanName }} %
+                </div>
+              </div>
+              <hr>
+              <input type="hidden" class="latitude" id="latitude" value="{{ $masjid->latitude }}">
+              <input type="hidden" class="longitude" id="longitude" value="{{ $masjid->longitude }}">
+              <div class="row">
+                <div class="col-sm-12">
+                  <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-  
-        <div class="col-md-5" data-aos="zoom-in">
-          <div class="panel panel-info panel-dashboard">
-            <div class="panel-heading centered">
-              <h2 class="panel-title"><strong>Lokasi</strong></h4>
-            </div>
-            <div class="panel-body">
-              <div id="map"></div>
+        
+        <div class="col-md-12" data-aos="zoom-in">
+          <h2>Lokasi</h2>
+          <div id="map"></div>
+        </div>
+
+        <div class="col-md-12 mt-3">
+          <h2>Pimpinan Masjid</h2>
+          @if ($pimpinan->count() == 1)
+          <div class="box">
+            <div class="box-body">
+                <table id="category-table" class="table table-light table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Nama Pimpinan</th>
+                            <th class="text-center">Nama Imam</th>
+                            <th class="text-center">Jumlah Pengurus</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($pimpinan as $pimpinan)
+                        <tr>
+                          <th class="text-center">{{ $loop->iteration }}</th>
+                            <td align="center">{{ $pimpinan->pimpinan }}</td>
+                            <td align="center">{{ $pimpinan->imam }}</td>
+                            <td align="center">{{ $pimpinan->jmlhpengurus }}</td>
+                            <td align="center">
+                                <div class="btn-group">
+                                    <hr>
+                                    <a href="{{ route('editmasjid',$pimpinan->id) }}" class="btn btn-warning mr-2"><i class="bi bi-eye"></i></a>
+                                    <hr>
+                                    <a href="javascript:void(0)" class="btn btn-danger"
+                                        onclick="event.preventDefault();
+                                            document.getElementById('masjid-delete-form-{{$pimpinan->id}}').submit();">
+                                        <i class="bi bi-trash3"></i>
+                                    </a>
+                                    <form id="masjid-delete-form-{{$pimpinan->id}}" action="{{ route('destroymasjid',$pimpinan->id) }}" method="POST" style="display: none;">
+                                        @csrf 
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
           </div>
+              
+          @else
+              <p>Data Tidak Ditemukan</p>
+              <div class="row">
+                <div class="col-sm-12">
+                  <a class="btn btn-success" href="{{ route('cpimpinan', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+                </div>
+              </div>
+          @endif
         </div>
+
+        <div class="col-md-12 mt-3">
+          <h2>Fasilitas Umum</h2>
+          @if ($fasilumum->count() >= 1)
+          <div class="box">
+            <div class="box-body">
+                <table id="category-table" class="table table-light table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Nama Fasilitas</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($fasilumum as $fasilumum)
+                        <tr>
+                          <th class="text-center">{{ $loop->iteration }}</th>
+                            <td>{{ $fasilumum->name }}</td>
+                            <td align="center">
+                                <div class="btn-group">
+                                    <hr>
+                                    <a href="{{ route('editmasjid',$fasilumum->id) }}" class="btn btn-warning mr-2"><i class="bi bi-eye"></i></a>
+                                    <hr>
+                                    <a href="javascript:void(0)" class="btn btn-danger"
+                                        onclick="event.preventDefault();
+                                            document.getElementById('masjid-delete-form-{{$fasilumum->id}}').submit();">
+                                        <i class="bi bi-trash3"></i>
+                                    </a>
+                                    <form id="masjid-delete-form-{{$fasilumum->id}}" action="{{ route('destroymasjid',$fasilumum->id) }}" method="POST" style="display: none;">
+                                        @csrf 
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <a class="btn btn-success" href="{{ route('cfasilumum', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+            </div>
+          </div>
+              
+          @else
+              <p>Data Tidak Ditemukan</p>
+              <div class="row">
+                <div class="col-sm-12">
+                  <a class="btn btn-success" href="{{ route('cfasilumum', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+                </div>
+              </div>
+          @endif
+        </div>
+
+        <div class="col-md-12 mt-3">
+          <h2>Fasilitas Anak</h2>
+          @if ($fasilanak->count() >= 1)
+          <div class="box">
+            <div class="box-body">
+                <table id="category-table" class="table table-light table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Nama Fasilitas</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($fasilanak as $fasilanak)
+                        <tr>
+                          <th class="text-center">{{ $loop->iteration }}</th>
+                            <td>{{ $fasilanak->name }}</td>
+                            <td align="center">
+                                <div class="btn-group">
+                                    <hr>
+                                    <a href="{{ route('editmasjid',$fasilanak->id) }}" class="btn btn-warning mr-2"><i class="bi bi-eye"></i></a>
+                                    <hr>
+                                    <a href="javascript:void(0)" class="btn btn-danger"
+                                        onclick="event.preventDefault();
+                                            document.getElementById('masjid-delete-form-{{$fasilanak->id}}').submit();">
+                                        <i class="bi bi-trash3"></i>
+                                    </a>
+                                    <form id="masjid-delete-form-{{$fasilanak->id}}" action="{{ route('destroymasjid',$fasilanak->id) }}" method="POST" style="display: none;">
+                                        @csrf 
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <a class="btn btn-success" href="{{ route('cfasilanak', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+            </div>
+          </div>
+              
+          @else
+              <p>Data Tidak Ditemukan</p>
+              <div class="row">
+                <div class="col-sm-12">
+                  <a class="btn btn-success" href="{{ route('cfasilanak', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+                </div>
+              </div>
+          @endif
+        </div>
+
+        <div class="col-md-12 mt-3">
+          <h2>Fasilitas Disabilitas</h2>
+          @if ($fasildisabilitas->count() >= 1)
+          <div class="box">
+            <div class="box-body">
+                <table id="category-table" class="table table-light table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Nama Fasilitas</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($fasildisabilitas as $fasildisabilitas)
+                        <tr>
+                          <th class="text-center">{{ $loop->iteration }}</th>
+                            <td>{{ $fasildisabilitas->name }}</td>
+                            <td align="center">
+                                <div class="btn-group">
+                                    <hr>
+                                    <a href="{{ route('editmasjid',$fasildisabilitas->id) }}" class="btn btn-warning mr-2"><i class="bi bi-eye"></i></a>
+                                    <hr>
+                                    <a href="javascript:void(0)" class="btn btn-danger"
+                                        onclick="event.preventDefault();
+                                            document.getElementById('masjid-delete-form-{{$fasildisabilitas->id}}').submit();">
+                                        <i class="bi bi-trash3"></i>
+                                    </a>
+                                    <form id="masjid-delete-form-{{$fasildisabilitas->id}}" action="{{ route('destroymasjid',$fasildisabilitas->id) }}" method="POST" style="display: none;">
+                                        @csrf 
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <a class="btn btn-success" href="{{ route('cfasildisabilitas', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+            </div>
+          </div>
+              
+          @else
+              <p>Data Tidak Ditemukan</p>
+              <div class="row">
+                <div class="col-sm-12">
+                  <a class="btn btn-success" href="{{ route('cfasildisabilitas', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+                </div>
+              </div>
+          @endif
+        </div>
+
+        <div class="col-md-12 mt-3">
+          <h2>Kegiatan Masjid</h2>
+          @if ($kegiatan->count() >= 1)
+          <div class="box">
+            <div class="box-body">
+                <table id="category-table" class="table table-light table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Nama Kegiatan</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($kegiatan as $kegiatan)
+                        <tr>
+                          <th class="text-center">{{ $loop->iteration }}</th>
+                            <td>{{ $kegiatan->name }}</td>
+                            <td align="center">
+                                <div class="btn-group">
+                                    <hr>
+                                    <a href="{{ route('editmasjid',$kegiatan->id) }}" class="btn btn-warning mr-2"><i class="bi bi-eye"></i></a>
+                                    <hr>
+                                    <a href="javascript:void(0)" class="btn btn-danger"
+                                        onclick="event.preventDefault();
+                                            document.getElementById('masjid-delete-form-{{$kegiatan->id}}').submit();">
+                                        <i class="bi bi-trash3"></i>
+                                    </a>
+                                    <form id="masjid-delete-form-{{$kegiatan->id}}" action="{{ route('destroymasjid',$kegiatan->id) }}" method="POST" style="display: none;">
+                                        @csrf 
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <a class="btn btn-success" href="{{ route('ckegiatan', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+            </div>
+          </div>
+              
+          @else
+              <p>Data Tidak Ditemukan</p>
+              <div class="row">
+                <div class="col-sm-12">
+                  <a class="btn btn-success" href="{{ route('ckegiatan', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+                </div>
+              </div>
+          @endif
+        </div>
+
+        <div class="col-md-12 mt-3">
+          <h2>Galeri</h2>
+          @if ($foto->count() >= 1)
+          <div class="row">
+            <div class="gallery">
+              @foreach ($foto as $foto)
+              <img src="/storage/galeri/{{ $foto->galeri }}" alt="{{ $foto->galeri }}" width="600" height="400">
+              @endforeach
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <a class="btn btn-success" href="{{ route('cfoto', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+            </div>
+          </div>
+          @else
+              <p>Data Tidak Ditemukan</p>
+              <div class="row">
+                <div class="col-sm-12">
+                  <a class="btn btn-success" href="{{ route('cfoto', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+                </div>
+              </div>
+          @endif
+        </div>
+
+      </div>
+    </div>  
 </section>
 <script>
     let latitude = document.getElementById("latitude").value;
     let longitude = document.getElementById("longitude").value;
 
     let map = L.map('map').setView([latitude, longitude], 13);
-    
-    // L.tileLayer('http://{s}.google.com/vt?lyrs=s,h&x={x}&y={y}&z={z}',{
-    // maxZoom: 20,
-    // subdomains:['mt0','mt1','mt2','mt3']
-    // }).addTo(map);
-
-    // var map = L.map('map').setView([37.8, -96], 4);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
-
-    // L.geoJson(statesData).addTo(map);
-    
-    // function getColor(d) {
-    // return d > 1000 ? '#800026' :
-    //        d > 500  ? '#BD0026' :
-    //        d > 200  ? '#E31A1C' :
-    //        d > 100  ? '#FC4E2A' :
-    //        d > 50   ? '#FD8D3C' :
-    //        d > 20   ? '#FEB24C' :
-    //        d > 10   ? '#FED976' :
-    //                   '#FFEDA0';
-    // }
-
-    // function style(feature) {
-    // return {
-    //     fillColor: getColor(feature.properties.density),
-    //     weight: 2,
-    //     opacity: 1,
-    //     color: 'white',
-    //     dashArray: '3',
-    //     fillOpacity: 0.7
-    // };
-    // }
-
-    // L.geoJson(statesData, {style: style}).addTo(map);
 
     var marker = L.icon({
     iconUrl: '/asset/marker/mosquee.png',
@@ -112,6 +392,9 @@
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
     });
 
-    L.marker([latitude, longitude], {icon: marker}).addTo(map);
+    let popup = L.marker([latitude, longitude], {icon: marker}).addTo(map);
+
+    popup.bindPopup("<b>Lokasi Masjid").openPopup();
+
 </script>
 @endsection
