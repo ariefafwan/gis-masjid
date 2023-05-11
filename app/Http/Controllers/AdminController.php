@@ -20,7 +20,8 @@ class AdminController extends Controller
     {
         $page = "Dashboard";
         $dt1 = Masjid::get()->count();
-        return view('admin.dashboard', compact('page', 'dt1'));
+        $masjid = Masjid::all();
+        return view('admin.dashboard', compact('page', 'dt1', 'masjid'));
     }
     
     public function index()
@@ -40,30 +41,43 @@ class AdminController extends Controller
 
     public function storemasjid(Request $request)
     {
+        $nm = $request->geojson;
+        $namaFile = $nm->getClientOriginalName();
+        
         $dtUpload = new Masjid();
         $dtUpload->name = $request->name;
         $dtUpload->alamat = $request->alamat;
-        $dtUpload->luastanah = $request->luastanah;
-        $dtUpload->statustanah = $request->statustanah;
-        $dtUpload->luastbangunan = $request->luastbangunan;
+        $dtUpload->luasbangunan = $request->luasbangunan;
         $dtUpload->dayatampung = $request->dayatampung;
         $dtUpload->latitude = $request->latitude;
-        $dtUpload->longitude = $request->longitude;        
+        $dtUpload->longitude = $request->longitude;
+        $dtUpload->geojson = $namaFile;
         $dtUpload->save();
 
+        $nm->move(public_path() . '/storage/geojson', $namaFile);
         Alert::success('Informasi Pesan!', 'Madjid Baru Berhasil ditambahkan');
         return redirect()->route('masjid');
     }
 
     public function editmasjid($id)
     {
-        $page = "Edit Madjid";
+        $page = "Detail Madjid";
         $masjid = Masjid::findOrFail($id);
         return view('admin.masjid.edit', compact('page', 'masjid'));
     }
 
+    public function masjid()
+    {
+        $masjid = Masjid::all();
+        return json_encode($masjid);
+        dd($masjid);
+    }
+
     public function updatemasjid(Request $request, $id)
     {
+        $nm = $request->geojson;
+        $namaFile = $nm->getClientOriginalName();
+        
         $dtUpload = Masjid::findOrFail($id);
         $dtUpload->name = $request->name;
         $dtUpload->alamat = $request->alamat;
@@ -73,7 +87,10 @@ class AdminController extends Controller
         $dtUpload->dayatampung = $request->dayatampung;
         $dtUpload->latitude = $request->latitude;
         $dtUpload->longitude = $request->longitude;    
+        $dtUpload->geojson = $namaFile;
         $dtUpload->save();
+
+        $nm->move(public_path() . '/storage/geojson', $namaFile);
 
         Alert::success('Informasi Pesan!', 'Profil Masjid Berhasil Diedit');
         return redirect()->route('masjid');

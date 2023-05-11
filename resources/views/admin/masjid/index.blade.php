@@ -17,6 +17,7 @@
                             <tr>
                                 <th class="text-center">#</th>
                                 <th class="text-center">Name</th>
+                                <th class="text-center">Alamat</th>
                                 <th class="text-center">Latitude</th>
                                 <th class="text-center">Longitude</th>
                                 <th class="text-center">Aksi</th>
@@ -27,17 +28,20 @@
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>{{ $row->name }}</td>
+                                <td>{{ $row->alamat }}</td>
+                                <td>{{ $row->latitude }}</td>
+                                <td>{{ $row->longitude }}</td>
                                 <td align="center">
                                     <div class="btn-group">
                                         <hr>
-                                        <a href="{{ route('masjid.edit',$row->id) }}" class="btn btn-warning mr-2"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                        <a href="{{ route('editmasjid',$row->id) }}" class="btn btn-warning mr-2"><i class="bi bi-eye"></i></a>
                                         <hr>
                                         <a href="javascript:void(0)" class="btn btn-danger"
                                             onclick="event.preventDefault();
                                                 document.getElementById('masjid-delete-form-{{$row->id}}').submit();">
-                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                            <i class="bi bi-trash3"></i>
                                         </a>
-                                        <form id="masjid-delete-form-{{$row->id}}" action="{{ route('destroymasid',$row->id) }}" method="POST" style="display: none;">
+                                        <form id="masjid-delete-form-{{$row->id}}" action="{{ route('destroymasjid',$row->id) }}" method="POST" style="display: none;">
                                             @csrf 
                                         </form>
                                     </div>
