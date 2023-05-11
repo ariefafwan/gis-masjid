@@ -17,12 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('alamat');
-            $table->float('luastanah');
-            $table->string('statustanah');
-            $table->float('luastbangunan');
+            $table->float('luasbangunan');
             $table->bigInteger('dayatampung');
             $table->string('latitude');
             $table->string('longitude');
+            $table->string('geojson');
+            $table->string('pembangunan');
             $table->timestamps();
         });
     }
