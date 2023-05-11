@@ -70,13 +70,14 @@
             geoLayer = L.geoJson(data, {
             style: function(feature) {
                 return {
-                    color: "yellow",
+                    color: "{{ $row->pembangunan }}",
+                    fillColor: '{{ $row->pembangunan }}',
                 }
             },
         }).addTo(map);
 
             geoLayer.eachLayer(function(layer) {
-                layer.bindPopop("Aceh Tamiang");
+                layer.bindPopup("{{ $row->name }}");
             });
         });
     <?php } ?>

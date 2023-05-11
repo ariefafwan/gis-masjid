@@ -18,6 +18,7 @@
                                 <th class="text-center">#</th>
                                 <th class="text-center">Name</th>
                                 <th class="text-center">Alamat</th>
+                                <th class="text-center">Skala Pembangunan (%)</th>
                                 <th class="text-center">Latitude</th>
                                 <th class="text-center">Longitude</th>
                                 <th class="text-center">Aksi</th>
@@ -26,11 +27,12 @@
                         <tbody>
                             @foreach($masjid as $index => $row)
                             <tr>
-                                <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $row->name }}</td>
-                                <td>{{ $row->alamat }}</td>
-                                <td>{{ $row->latitude }}</td>
-                                <td>{{ $row->longitude }}</td>
+                                <th align="center" scope="row">{{ $index + 1 }}</th>
+                                <td align="center">{{ $row->name }}</td>
+                                <td align="center">{{ $row->alamat }}</td>
+                                <td align="center">{{ $row->PembangunanName }} %</td>
+                                <td align="center">{{ $row->latitude }}</td>
+                                <td align="center">{{ $row->longitude }}</td>
                                 <td align="center">
                                     <div class="btn-group">
                                         <hr>

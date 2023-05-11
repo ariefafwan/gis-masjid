@@ -35,19 +35,25 @@ class Masjid extends Model
         return $this->hasMany(Kegiatan::class);
     }
 
-    public function sejarah()
-    {
-        return $this->hasOne(Sejarah::class);
-    }
-
-    public function dokumen()
-    {
-        return $this->hasMany(Dokumen::class);
-    }
-
     public function pimpinan()
     {
         return $this->hasOne(Pimpinan::class);
+    }
+
+    public function getPembangunanNameAttribute()
+    {
+        $pembangunan = $this->pembangunan;
+        if ($pembangunan == "#781804") {
+            return '1-20';
+        } elseif ($pembangunan == "#CB2602") {
+            return '21-40';
+        } elseif ($pembangunan == "#DE3611") {
+            return '41-60';
+        } elseif ($pembangunan == "#E35131") {
+            return '61-80';
+        }
+            return '81-100';
+
     }
 
 }
