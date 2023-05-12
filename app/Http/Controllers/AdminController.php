@@ -62,6 +62,13 @@ class AdminController extends Controller
 
     public function editmasjid($id)
     {
+        $masjid = Masjid::findOrFail($id);
+        $page = "Edit Masjid $masjid->name";
+        return view('admin.masjid.edit', compact('masjid', 'page'));
+    }
+    
+    public function showmasjid($id)
+    {
         $page = "Profile Masjid";
         $masjid = Masjid::findOrFail($id);
         $fasilumum = Fasilumum::where('masjid_id', $id)->get();
@@ -70,7 +77,7 @@ class AdminController extends Controller
         $kegiatan = Kegiatan::where('masjid_id', $id)->get();
         $pimpinan = Pimpinan::where('masjid_id', $id)->get();
         $foto = Foto::where('masjid_id', $id)->get();
-        return view('admin.masjid.edit', 
+        return view('admin.masjid.show', 
             compact('page', 'masjid', 'fasilumum', 'fasilanak','fasildisabilitas', 'kegiatan', 'pimpinan', 'foto'));
     }
 
@@ -89,12 +96,11 @@ class AdminController extends Controller
         $dtUpload = Masjid::findOrFail($id);
         $dtUpload->name = $request->name;
         $dtUpload->alamat = $request->alamat;
-        $dtUpload->luastanah = $request->luastanah;
-        $dtUpload->statustanah = $request->statustanah;
-        $dtUpload->luastbangunan = $request->luastbangunan;
+        $dtUpload->luasbangunan = $request->luasbangunan;
         $dtUpload->dayatampung = $request->dayatampung;
         $dtUpload->latitude = $request->latitude;
-        $dtUpload->longitude = $request->longitude;    
+        $dtUpload->longitude = $request->longitude;
+        $dtUpload->pembangunan = $request->pembangunan;
         $dtUpload->geojson = $namaFile;
         $dtUpload->save();
 
@@ -131,14 +137,14 @@ class AdminController extends Controller
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Fasilitas Ramah Anak Baru Berhasil ditambahkan');
-        return redirect()->route('editmasjid', $masjid);
+        return redirect()->route('showmasjid', $masjid);
     }
 
     public function editfasilanak($id)
     {
         $fasilanak = Fasilanak::findOrFail($id);
         $page = "Tambah Fasilitas Ramah Anak Masjid";
-        return view('admin.masjid.fasilanak.create', compact('page', 'fasilanak'));
+        return view('admin.masjid.fasilanak.edit', compact('page', 'fasilanak'));
     }
 
     public function updatefasilanak(Request $request, $id)
@@ -151,7 +157,16 @@ class AdminController extends Controller
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Fasilitas Ramah Anak Berhasil diupdate');
-        return redirect()->route('editmasjid', $masjid);
+        return redirect()->route('showmasjid', $masjid);
+    }
+
+    public function destroyfasilanak($id)
+    {
+        $fasilanak = Fasilanak::findOrFail($id);
+        $fasilanak->delete();
+        
+        Alert::success('Informasi Pesan!', 'Fasilitas Ramah Anak Berhasil dihapus!');
+        return back();
     }
 
     //fasilumum
@@ -172,10 +187,10 @@ class AdminController extends Controller
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Fasilitas Umum Baru Berhasil ditambahkan');
-        return redirect()->route('editmasjid', $masjid);
+        return redirect()->route('showmasjid', $masjid);
     }
 
-    public function ediitfasilumum($id)
+    public function editfasilumum($id)
     {
         $fasilumum = Fasilumum::findOrFail($id);
         $page = "Tambah Fasilitas Umum Masjid";
@@ -192,7 +207,16 @@ class AdminController extends Controller
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Fasilitas Umum Berhasil diupdate');
-        return redirect()->route('editmasjid', $masjid);
+        return redirect()->route('showmasjid', $masjid);
+    }
+
+    public function destroyfasilumum($id)
+    {
+        $fasilumum = Fasilumum::findOrFail($id);
+        $fasilumum->delete();
+        
+        Alert::success('Informasi Pesan!', 'Fasilitas Umum Berhasil dihapus!');
+        return back();
     }
 
     //fasildisabilitas
@@ -213,7 +237,7 @@ class AdminController extends Controller
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Fasilitas Disabilitas Baru Berhasil ditambahkan');
-        return redirect()->route('editmasjid', $masjid);
+        return redirect()->route('showmasjid', $masjid);
     }
 
     public function editfasildisabilitas($id)
@@ -233,7 +257,16 @@ class AdminController extends Controller
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Fasilitas Disabilitas Berhasil diupdate');
-        return redirect()->route('editmasjid', $masjid);
+        return redirect()->route('showmasjid', $masjid);
+    }
+
+    public function destroyfasildisabilitas($id)
+    {
+        $fasildisabilitas = Fasildisabili::findOrFail($id);
+        $fasildisabilitas->delete();
+        
+        Alert::success('Informasi Pesan!', 'Fasilitas Disabilitas Berhasil dihapus!');
+        return back();
     }
 
     //kegiatan
@@ -254,7 +287,7 @@ class AdminController extends Controller
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Kegiatan Masjid Baru Berhasil ditambahkan');
-        return redirect()->route('editmasjid', $masjid);
+        return redirect()->route('showmasjid', $masjid);
     }
 
     public function editkegiatan($id)
@@ -274,7 +307,16 @@ class AdminController extends Controller
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Kegiatan Masjid Berhasil diupdate');
-        return redirect()->route('editmasjid', $masjid);
+        return redirect()->route('showmasjid', $masjid);
+    }
+
+    public function destroykegiatan($id)
+    {
+        $kegiatan = Kegiatan::findOrFail($id);
+        $kegiatan->delete();
+        
+        Alert::success('Informasi Pesan!', 'Kegiatan Berhasil dihapus!');
+        return back();
     }
 
     //pimpinan
@@ -297,7 +339,7 @@ class AdminController extends Controller
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Pimpinan Masjid Baru Berhasil ditambahkan');
-        return redirect()->route('editmasjid', $masjid);
+        return redirect()->route('showmasjid', $masjid);
     }
 
     public function editpimpinan($id)
@@ -319,7 +361,16 @@ class AdminController extends Controller
         $dtUpload->save();
 
         Alert::success('Informasi Pesan!', 'Pimpinan Masjid Berhasil Diupdate');
-        return redirect()->route('editmasjid', $masjid);
+        return redirect()->route('showmasjid', $masjid);
+    }
+
+    public function destroypimpinan($id)
+    {
+        $pimpinan = Pimpinan::findOrFail($id);
+        $pimpinan->delete();
+        
+        Alert::success('Informasi Pesan!', 'Pimpinan Berhasil dihapus!');
+        return back();
     }
 
     //foto
@@ -343,7 +394,7 @@ class AdminController extends Controller
 
         $nm->move(public_path() . '/storage/galeri', $namaFile);
         Alert::success('Informasi Pesan!', 'Galeri Masjid Baru Berhasil ditambahkan');
-        return redirect()->route('editmasjid', $masjid);
+        return redirect()->route('showmasjid', $masjid);
     }
 
     public function editfoto($id)
@@ -366,6 +417,15 @@ class AdminController extends Controller
 
         $nm->move(public_path() . '/storage/galeri', $namaFile);
         Alert::success('Informasi Pesan!', 'Galeri Masjid Berhasil Diupdate');
-        return redirect()->route('editmasjid', $masjid);
+        return redirect()->route('showmasjid', $masjid);
+    }
+
+    public function destroyfoto($id)
+    {
+        $foto = Foto::findOrFail($id);
+        $foto->delete();
+        
+        Alert::success('Informasi Pesan!', 'Foto Berhasil dihapus!');
+        return back();
     }
 }

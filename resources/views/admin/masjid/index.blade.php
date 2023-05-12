@@ -36,7 +36,7 @@
                                 <td align="center">
                                     <div class="btn-group">
                                         <hr>
-                                        <a href="{{ route('editmasjid',$row->id) }}" class="btn btn-warning mr-2"><i class="bi bi-eye"></i></a>
+                                        <a href="{{ route('showmasjid',$row->id) }}" class="btn btn-warning mr-2"><i class="bi bi-eye"></i></a>
                                         <hr>
                                         <a href="javascript:void(0)" class="btn btn-danger"
                                             onclick="event.preventDefault();
