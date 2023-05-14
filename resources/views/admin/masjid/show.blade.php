@@ -347,14 +347,24 @@
           <h2>Galeri</h2>
           @if ($foto->count() >= 1)
           <div class="row">
-            <div class="gallery">
+            <div class="kotak">
               @foreach ($foto as $foto)
-              <img src="/storage/galeri/{{ $foto->galeri }}" alt="{{ $foto->galeri }}" width="600" height="400">
+              <div class="gallery">
+                  <img src="/storage/galeri/{{ $foto->galeri }}" alt="{{ $foto->galeri }}">
+                    <a href="javascript:void(0)" class="btn btn-danger"
+                       onclick="event.preventDefault();
+                       document.getElementById('foto-delete-form-{{$foto->id}}').submit();">
+                       <i class="bi bi-trash3"></i>
+                  </div>
+                  <form id="foto-delete-form-{{$foto->id}}" action="{{ route('dfoto',$foto->id) }}" method="POST" style="display: none;">
+                      @csrf 
+                  </form>
+              </div>
               @endforeach
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-12 mt-5">
               <a class="btn btn-success" href="{{ route('cfoto', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
             </div>
           </div>
