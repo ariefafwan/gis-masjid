@@ -68,11 +68,10 @@
             width: 180px;
             height: 180px;
             float: left;
-            margin-right: 10px;
         }
         div.gallery:hover img {
-            width: 170px;
-            filter: blur(1px);
+            width: 175px;
+            filter: blur(.6px);
             box-shadow: 5px 5px 5px #333
         }
         div.gallery img {

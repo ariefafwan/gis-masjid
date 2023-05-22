@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dokumen;
 use App\Models\Fasilanak;
 use App\Models\Fasildisabili;
 use App\Models\Fasilumum;
@@ -10,8 +9,8 @@ use App\Models\Foto;
 use App\Models\Kegiatan;
 use App\Models\Masjid;
 use App\Models\Pimpinan;
-use App\Models\Sejarah;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminController extends Controller
@@ -23,7 +22,7 @@ class AdminController extends Controller
         $masjid = Masjid::all();
         return view('admin.dashboard', compact('page', 'dt1', 'masjid'));
     }
-    
+
     public function index()
     {
         $page = "Daftar Masjid";
@@ -41,9 +40,7 @@ class AdminController extends Controller
 
     public function storemasjid(Request $request)
     {
-        $nm = $request->geojson;
-        $namaFile = $nm->getClientOriginalName();
-        
+
         $dtUpload = new Masjid();
         $dtUpload->name = $request->name;
         $dtUpload->alamat = $request->alamat;
@@ -52,10 +49,16 @@ class AdminController extends Controller
         $dtUpload->latitude = $request->latitude;
         $dtUpload->longitude = $request->longitude;
         $dtUpload->pembangunan = $request->pembangunan;
-        $dtUpload->geojson = $namaFile;
+        $file = $request->file('geojson');
+        if ($request->validate([
+            'geojson' => 'required|file:geojson|max:5000'
+        ])) {
+            $filename = $file->getClientOriginalName();
+            $file->storeAs('/storage/geojson/', $filename);
+            $dtUpload->geojson = $filename;
+        }
         $dtUpload->save();
 
-        $nm->move(public_path() . '/storage/geojson', $namaFile);
         Alert::success('Informasi Pesan!', 'Madjid Baru Berhasil ditambahkan');
         return redirect()->route('masjid');
     }
@@ -66,7 +69,7 @@ class AdminController extends Controller
         $page = "Edit Masjid $masjid->name";
         return view('admin.masjid.edit', compact('masjid', 'page'));
     }
-    
+
     public function showmasjid($id)
     {
         $page = "Profile Masjid";
@@ -77,22 +80,22 @@ class AdminController extends Controller
         $kegiatan = Kegiatan::where('masjid_id', $id)->get();
         $pimpinan = Pimpinan::where('masjid_id', $id)->get();
         $foto = Foto::where('masjid_id', $id)->get();
-        return view('admin.masjid.show', 
-            compact('page', 'masjid', 'fasilumum', 'fasilanak','fasildisabilitas', 'kegiatan', 'pimpinan', 'foto'));
+        return view(
+            'admin.masjid.show',
+            compact('page', 'masjid', 'fasilumum', 'fasilanak', 'fasildisabilitas', 'kegiatan', 'pimpinan', 'foto')
+        );
     }
 
     public function masjid()
     {
         $masjid = Masjid::all();
         return json_encode($masjid);
-        dd($masjid);
+        // dd($masjid);
     }
 
     public function updatemasjid(Request $request, $id)
     {
-        $nm = $request->geojson;
-        $namaFile = $nm->getClientOriginalName();
-        
+
         $dtUpload = Masjid::findOrFail($id);
         $dtUpload->name = $request->name;
         $dtUpload->alamat = $request->alamat;
@@ -101,10 +104,20 @@ class AdminController extends Controller
         $dtUpload->latitude = $request->latitude;
         $dtUpload->longitude = $request->longitude;
         $dtUpload->pembangunan = $request->pembangunan;
-        $dtUpload->geojson = $namaFile;
+        $file = $request->file('geojson');
+        if ($request->validate([
+            'geojson' => 'required|file:geojson|max:5000'
+        ])) {
+            // menghapus gambar lama
+            if ($request->oldImage) {
+                Storage::delete('storage/geojson/' . $dtUpload->geojson);
+            }
+            // menyimpan gambar baru
+            $filename = $file->getClientOriginalName();
+            $file->storeAs('/storage/geojson/', $filename);
+            $dtUpload->geojson = $filename;
+        }
         $dtUpload->save();
-
-        $nm->move(public_path() . '/storage/geojson', $namaFile);
 
         Alert::success('Informasi Pesan!', 'Profil Masjid Berhasil Diedit');
         return redirect()->route('masjid');
@@ -113,8 +126,9 @@ class AdminController extends Controller
     public function destroymasjid($id)
     {
         $masjid = Masjid::findOrFail($id);
+        Storage::delete('storage/geojson/' . $masjid->geojson);
         $masjid->delete();
-        
+
         Alert::success('Informasi Pesan!', 'Masjid Berhasil dihapus!');
         return back();
     }
@@ -164,7 +178,7 @@ class AdminController extends Controller
     {
         $fasilanak = Fasilanak::findOrFail($id);
         $fasilanak->delete();
-        
+
         Alert::success('Informasi Pesan!', 'Fasilitas Ramah Anak Berhasil dihapus!');
         return back();
     }
@@ -214,7 +228,7 @@ class AdminController extends Controller
     {
         $fasilumum = Fasilumum::findOrFail($id);
         $fasilumum->delete();
-        
+
         Alert::success('Informasi Pesan!', 'Fasilitas Umum Berhasil dihapus!');
         return back();
     }
@@ -230,7 +244,7 @@ class AdminController extends Controller
     public function storefasildisabilitas(Request $request)
     {
         $masjid = $request->masjid_id;
-        
+
         $dtUpload = new Fasildisabili();
         $dtUpload->masjid_id = $request->masjid_id;
         $dtUpload->name = $request->name;
@@ -250,7 +264,7 @@ class AdminController extends Controller
     public function updatefasildisabilitas(Request $request, $id)
     {
         $masjid = $request->masjid_id;
-        
+
         $dtUpload = Fasildisabili::findOrFail($id);
         $dtUpload->masjid_id = $request->masjid_id;
         $dtUpload->name = $request->name;
@@ -264,7 +278,7 @@ class AdminController extends Controller
     {
         $fasildisabilitas = Fasildisabili::findOrFail($id);
         $fasildisabilitas->delete();
-        
+
         Alert::success('Informasi Pesan!', 'Fasilitas Disabilitas Berhasil dihapus!');
         return back();
     }
@@ -314,7 +328,7 @@ class AdminController extends Controller
     {
         $kegiatan = Kegiatan::findOrFail($id);
         $kegiatan->delete();
-        
+
         Alert::success('Informasi Pesan!', 'Kegiatan Berhasil dihapus!');
         return back();
     }
@@ -368,7 +382,7 @@ class AdminController extends Controller
     {
         $pimpinan = Pimpinan::findOrFail($id);
         $pimpinan->delete();
-        
+
         Alert::success('Informasi Pesan!', 'Pimpinan Berhasil dihapus!');
         return back();
     }
@@ -386,7 +400,7 @@ class AdminController extends Controller
         $masjid = $request->masjid_id;
         $nm = $request->galeri;
         $namaFile = $nm->getClientOriginalName();
-        
+
         $dtUpload = new Foto();
         $dtUpload->masjid_id = $request->masjid_id;
         $dtUpload->galeri = $namaFile;
@@ -409,7 +423,7 @@ class AdminController extends Controller
         $masjid = $request->masjid_id;
         $nm = $request->galeri;
         $namaFile = $nm->getClientOriginalName();
-        
+
         $dtUpload = Foto::findOrFail($id);
         $dtUpload->masjid_id = $request->masjid_id;
         $dtUpload->galeri = $namaFile;
@@ -424,7 +438,7 @@ class AdminController extends Controller
     {
         $foto = Foto::findOrFail($id);
         $foto->delete();
-        
+
         Alert::success('Informasi Pesan!', 'Foto Berhasil dihapus!');
         return back();
     }
