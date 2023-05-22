@@ -2,7 +2,6 @@
 
 @section('body')
 
-    <hr>
 <section class="content">
     <div class="btn-group mb-3">
         <a href="{{ route('createmasjid') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> CREATE NEW</a>
