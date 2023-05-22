@@ -57,7 +57,7 @@
               <input type="hidden" class="longitude" id="longitude" value="{{ $masjid->longitude }}">
               <div class="row">
                 <div class="col-sm-12">
-                  <a class="btn btn-info" href="{{ route('editmasjid', $masjid->id) }}"><i class="bi bi-pencil-fill"></i> Edit</a>
+                  <a class="btn btn-secondary" href="{{ route('editmasjid', $masjid->id) }}"><i class="bi bi-pencil-fill"></i> Edit</a>
                 </div>
               </div>
             </div>
@@ -117,7 +117,7 @@
               <p>Data Tidak Ditemukan</p>
               <div class="row">
                 <div class="col-sm-12">
-                  <a class="btn btn-success" href="{{ route('cpimpinan', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+                  <a class="btn btn-secondary" href="{{ route('cpimpinan', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
                 </div>
               </div>
           @endif
@@ -164,7 +164,7 @@
           </div>
           <div class="row">
             <div class="col-sm-12">
-              <a class="btn btn-success" href="{{ route('cfasilumum', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+              <a class="btn btn-secondary" href="{{ route('cfasilumum', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
             </div>
           </div>
               
@@ -172,7 +172,7 @@
               <p>Data Tidak Ditemukan</p>
               <div class="row">
                 <div class="col-sm-12">
-                  <a class="btn btn-success" href="{{ route('cfasilumum', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+                  <a class="btn btn-secondary" href="{{ route('cfasilumum', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
                 </div>
               </div>
           @endif
@@ -219,7 +219,7 @@
           </div>
           <div class="row">
             <div class="col-sm-12">
-              <a class="btn btn-success" href="{{ route('cfasilanak', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+              <a class="btn btn-secondary" href="{{ route('cfasilanak', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
             </div>
           </div>
               
@@ -227,7 +227,7 @@
               <p>Data Tidak Ditemukan</p>
               <div class="row">
                 <div class="col-sm-12">
-                  <a class="btn btn-success" href="{{ route('cfasilanak', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+                  <a class="btn btn-secondary" href="{{ route('cfasilanak', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
                 </div>
               </div>
           @endif
@@ -274,7 +274,7 @@
           </div>
           <div class="row">
             <div class="col-sm-12">
-              <a class="btn btn-success" href="{{ route('cfasildisabilitas', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+              <a class="btn btn-secondary" href="{{ route('cfasildisabilitas', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
             </div>
           </div>
               
@@ -282,7 +282,7 @@
               <p>Data Tidak Ditemukan</p>
               <div class="row">
                 <div class="col-sm-12">
-                  <a class="btn btn-success" href="{{ route('cfasildisabilitas', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+                  <a class="btn btn-secondary" href="{{ route('cfasildisabilitas', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
                 </div>
               </div>
           @endif
@@ -329,7 +329,7 @@
           </div>
           <div class="row">
             <div class="col-sm-12">
-              <a class="btn btn-success" href="{{ route('ckegiatan', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+              <a class="btn btn-secondary" href="{{ route('ckegiatan', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
             </div>
           </div>
               
@@ -337,7 +337,7 @@
               <p>Data Tidak Ditemukan</p>
               <div class="row">
                 <div class="col-sm-12">
-                  <a class="btn btn-success" href="{{ route('ckegiatan', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+                  <a class="btn btn-secondary" href="{{ route('ckegiatan', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
                 </div>
               </div>
           @endif
@@ -346,33 +346,55 @@
         <div class="col-md-12 mt-3">
           <h2>Galeri</h2>
           @if ($foto->count() >= 1)
-          <div class="row">
-            <div class="kotak">
-              @foreach ($foto as $foto)
-              <div class="gallery">
-                  <img src="/storage/galeri/{{ $foto->galeri }}" alt="{{ $foto->galeri }}">
-                    <a href="javascript:void(0)" class="btn btn-danger"
-                       onclick="event.preventDefault();
-                       document.getElementById('foto-delete-form-{{$foto->id}}').submit();">
-                       <i class="bi bi-trash3"></i>
-                  </div>
-                  <form id="foto-delete-form-{{$foto->id}}" action="{{ route('dfoto',$foto->id) }}" method="POST" style="display: none;">
-                      @csrf 
-                  </form>
-              </div>
-              @endforeach
+          <div class="box">
+            <div class="box-body">
+                <table id="category-table" class="table table-light table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Foto Masjid</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      @foreach ($foto as $foto)
+                        <tr>
+                          <th class="text-center">{{ $loop->iteration }}</th>
+                            <td>
+                              <img src="/storage/galeri/{{ $foto->galeri }}" alt="{{ $foto->galeri }}" class="img-thumbnail" style="max-width:150px; max-height:170px">
+                            </td>
+                            <td align="center">
+                                <div class="btn-group">
+                                    <hr>
+                                    <a href="{{ route('efoto',$foto->id) }}" class="btn btn-warning mr-2"><i class="bi bi-pencil-fill"></i></a>
+                                    <hr>
+                                    <a href="javascript:void(0)" class="btn btn-danger"
+                                        onclick="event.preventDefault();
+                                            document.getElementById('foto-delete-form-{{$foto->id}}').submit();">
+                                        <i class="bi bi-trash3"></i>
+                                    </a>
+                                    <form id="foto-delete-form-{{$foto->id}}" action="{{ route('dfoto',$foto->id) }}" method="POST" style="display: none;">
+                                        @csrf 
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-12 mt-5">
-              <a class="btn btn-success" href="{{ route('cfoto', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+            <div class="col-sm-12">
+              <a class="btn btn-secondary" href="{{ route('ckegiatan', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
             </div>
           </div>
+              
           @else
               <p>Data Tidak Ditemukan</p>
               <div class="row">
                 <div class="col-sm-12">
-                  <a class="btn btn-success" href="{{ route('cfoto', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+                  <a class="btn btn-secondary" href="{{ route('ckegiatan', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
                 </div>
               </div>
           @endif
