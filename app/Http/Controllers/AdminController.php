@@ -54,7 +54,7 @@ class AdminController extends Controller
             'geojson' => 'required|file:geojson|max:5000'
         ])) {
             $filename = $file->getClientOriginalName();
-            $file->storeAs('/storage/geojson/', $filename);
+            $file->storeAs('public/geojson/', $filename);
             $dtUpload->geojson = $filename;
         }
         $dtUpload->save();
@@ -110,11 +110,11 @@ class AdminController extends Controller
         ])) {
             // menghapus gambar lama
             if ($request->oldImage) {
-                Storage::delete('storage/geojson/' . $dtUpload->geojson);
+                Storage::delete('public/geojson/' . $dtUpload->geojson);
             }
             // menyimpan gambar baru
             $filename = $file->getClientOriginalName();
-            $file->storeAs('/storage/geojson/', $filename);
+            $file->storeAs('public/geojson/', $filename);
             $dtUpload->geojson = $filename;
         }
         $dtUpload->save();
