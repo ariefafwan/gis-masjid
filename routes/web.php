@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
-use function Pest\Laravel\post;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +18,7 @@ use function Pest\Laravel\post;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [UserController::class, 'welcome'])->name('welcome');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -28,9 +26,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::middleware('auth')->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     //masjid
     Route::get('/content', [AdminController::class, 'index'])->name('masjid');
@@ -76,12 +73,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/pimpinan/edit/{id}', [AdminController::class, 'editpimpinan'])->name('epimpinan');
     Route::post('/pimpinan/edit/{id}/update', [AdminController::class, 'updatepimpinan'])->name('upimpinan');
     Route::post('/pimpinan/edit/{id}/destroy', [AdminController::class, 'destroypimpinan'])->name('dpimpinan');
-    //profile
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
     //json
     Route::get('getmasjid/masjid', [AdminController::class, 'masjid']);
-
 });
