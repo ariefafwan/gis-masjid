@@ -19,32 +19,45 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-8">
-                        <h1 class="title mb-10">Peta Lokasi Wisata</h1>
-                        <div class="row align-items-center">          
-                    
+                        <h1 class="title">Peta Lokasi Wisata</h1>
+                        <div class="row align-items-center">
+                            <div class="mb-4" id="map"></div>
                         </div>
-                        <div class="container">
-                            <div class="row d-flex justify-content-center">
-                              <div class="menu-content pb-70 col-lg-8">
-                                <div class="title text-center" id="datawisata">
-                                  <h1 class="mb-10">Jangkauan Peta</h1>
-                                  <p>Aplikasi pemetaan geografis Wisata di kabupaten Banyumas ini memuat informasi dan lokasi dari Wisata ALam dan WIsata Kuliner di Banyumas. Pemetaan diambil dari data lokasi Google Maps dan data dari website masing-masing tempat wisata. Aplikasi ini memuat sejumlah informasi mengenai :
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
                     </div>
-                </div>
-            </div>
-        </section>
-        <!-- Contact-->
-        <section class="contact-section bg-black">
-            <div class="container px-4 px-lg-5">
-                <div class="social d-flex justify-content-center">
-                    <a class="mx-2" href="#!"><i class="fab fa-twitter"></i></a>
-                    <a class="mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                    <a class="mx-2" href="#!"><i class="fab fa-github"></i></a>
+                    <div class="col-xs-12">
+                        <h1 id="datamasjid">Data Masjid</h1>
+                        <p>Aplikasi pemetaan geografis Masjid di Kabupaten Aceh Tamiang, Masjid Yang Terdata :</p>
+                        <div class="box">
+                            <div class="box-body">
+                                <table id="category-table" class="table table-bordered table-hover">
+                                    <thead style="background-color: black">
+                                        <tr>
+                                            <th style="width: 5%" class="text-white text-center">#</th>
+                                            <th style="width: 30%" class="text-white text-center">Name</th>
+                                            <th class="text-white text-center">Alamat</th>
+                                            <th style="widht: 10%" class="text-white text-center">Skala Pembangunan</th>
+                                            <th style="widht: 5%" class="text-white text-center">Detail</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($masjid as $index => $row)
+                                        <tr>
+                                            <th scope="row">{{ $index + 1 }}</th>
+                                            <td>{{ $row->name }}</td>
+                                            <td>{{ $row->alamat }}</td>
+                                            <td>{{ $row->PembangunanName }}</td>
+                                            <td>
+                                                <a href="" class="btn btn-warning">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

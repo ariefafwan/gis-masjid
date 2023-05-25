@@ -15,7 +15,7 @@
                 Hello! {{ Auth::user()->name }}
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" href="{{ route('home') }}">Home</a></li>
+                <li><a class="dropdown-item" href="{{ route('welcome') }}">Home</a></li>
                 <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#LogoutModal">Logout</a>
                 </li>
             </ul>
