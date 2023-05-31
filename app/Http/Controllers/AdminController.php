@@ -43,9 +43,11 @@ class AdminController extends Controller
 
         $dtUpload = new Masjid();
         $dtUpload->name = $request->name;
+        $dtUpload->statusmasjid = $request->statusmasjid;
         $dtUpload->alamat = $request->alamat;
         $dtUpload->luasbangunan = $request->luasbangunan;
         $dtUpload->dayatampung = $request->dayatampung;
+        $dtUpload->statustanah = $request->statustanah;
         $dtUpload->latitude = $request->latitude;
         $dtUpload->longitude = $request->longitude;
         $dtUpload->pembangunan = $request->pembangunan;
@@ -75,14 +77,12 @@ class AdminController extends Controller
         $page = "Profile Masjid";
         $masjid = Masjid::findOrFail($id);
         $fasilumum = Fasilumum::where('masjid_id', $id)->get();
-        $fasilanak = Fasilanak::where('masjid_id', $id)->get();
-        $fasildisabilitas = Fasildisabili::where('masjid_id', $id)->get();
         $kegiatan = Kegiatan::where('masjid_id', $id)->get();
         $pimpinan = Pimpinan::where('masjid_id', $id)->get();
         $foto = Foto::where('masjid_id', $id)->get();
         return view(
             'admin.masjid.show',
-            compact('page', 'masjid', 'fasilumum', 'fasilanak', 'fasildisabilitas', 'kegiatan', 'pimpinan', 'foto')
+            compact('page', 'masjid', 'fasilumum', 'kegiatan', 'pimpinan', 'foto')
         );
     }
 
@@ -98,9 +98,11 @@ class AdminController extends Controller
 
         $dtUpload = Masjid::findOrFail($id);
         $dtUpload->name = $request->name;
+        $dtUpload->statusmasjid = $request->statusmasjid;
         $dtUpload->alamat = $request->alamat;
         $dtUpload->luasbangunan = $request->luasbangunan;
         $dtUpload->dayatampung = $request->dayatampung;
+        $dtUpload->statustanah = $request->statustanah;
         $dtUpload->latitude = $request->latitude;
         $dtUpload->longitude = $request->longitude;
         $dtUpload->pembangunan = $request->pembangunan;
@@ -130,56 +132,6 @@ class AdminController extends Controller
         $masjid->delete();
 
         Alert::success('Informasi Pesan!', 'Masjid Berhasil dihapus!');
-        return back();
-    }
-
-    //fasilanak
-    public function fasilanak($id)
-    {
-        $masjid = Masjid::findOrFail($id);
-        $page = "Tambah Fasilitas Ramah Anak Masjid $masjid->name";
-        return view('admin.masjid.fasilanak.create', compact('page', 'masjid'));
-    }
-
-    public function storefasilanak(Request $request)
-    {
-        $masjid = $request->masjid_id;
-
-        $dtUpload = new Fasilanak();
-        $dtUpload->masjid_id = $request->masjid_id;
-        $dtUpload->name = $request->name;
-        $dtUpload->save();
-
-        Alert::success('Informasi Pesan!', 'Fasilitas Ramah Anak Baru Berhasil ditambahkan');
-        return redirect()->route('showmasjid', $masjid);
-    }
-
-    public function editfasilanak($id)
-    {
-        $fasilanak = Fasilanak::findOrFail($id);
-        $page = "Tambah Fasilitas Ramah Anak Masjid";
-        return view('admin.masjid.fasilanak.edit', compact('page', 'fasilanak'));
-    }
-
-    public function updatefasilanak(Request $request, $id)
-    {
-        $masjid = $request->masjid_id;
-
-        $dtUpload = Fasilanak::findOrFail($id);
-        $dtUpload->masjid_id = $request->masjid_id;
-        $dtUpload->name = $request->name;
-        $dtUpload->save();
-
-        Alert::success('Informasi Pesan!', 'Fasilitas Ramah Anak Berhasil diupdate');
-        return redirect()->route('showmasjid', $masjid);
-    }
-
-    public function destroyfasilanak($id)
-    {
-        $fasilanak = Fasilanak::findOrFail($id);
-        $fasilanak->delete();
-
-        Alert::success('Informasi Pesan!', 'Fasilitas Ramah Anak Berhasil dihapus!');
         return back();
     }
 
@@ -230,56 +182,6 @@ class AdminController extends Controller
         $fasilumum->delete();
 
         Alert::success('Informasi Pesan!', 'Fasilitas Umum Berhasil dihapus!');
-        return back();
-    }
-
-    //fasildisabilitas
-    public function fasildisabilitas($id)
-    {
-        $masjid = Masjid::findOrFail($id);
-        $page = "Tambah Fasilitas Disabilitas Masjid $masjid->name";
-        return view('admin.masjid.fasildisabilitas.create', compact('page', 'masjid'));
-    }
-
-    public function storefasildisabilitas(Request $request)
-    {
-        $masjid = $request->masjid_id;
-
-        $dtUpload = new Fasildisabili();
-        $dtUpload->masjid_id = $request->masjid_id;
-        $dtUpload->name = $request->name;
-        $dtUpload->save();
-
-        Alert::success('Informasi Pesan!', 'Fasilitas Disabilitas Baru Berhasil ditambahkan');
-        return redirect()->route('showmasjid', $masjid);
-    }
-
-    public function editfasildisabilitas($id)
-    {
-        $fasildisabilitas = Fasildisabili::findOrFail($id);
-        $page = "Tambah Fasilitas Disabilitas Masjid";
-        return view('admin.masjid.fasildisabilitas.edit', compact('page', 'fasildisabilitas'));
-    }
-
-    public function updatefasildisabilitas(Request $request, $id)
-    {
-        $masjid = $request->masjid_id;
-
-        $dtUpload = Fasildisabili::findOrFail($id);
-        $dtUpload->masjid_id = $request->masjid_id;
-        $dtUpload->name = $request->name;
-        $dtUpload->save();
-
-        Alert::success('Informasi Pesan!', 'Fasilitas Disabilitas Berhasil diupdate');
-        return redirect()->route('showmasjid', $masjid);
-    }
-
-    public function destroyfasildisabilitas($id)
-    {
-        $fasildisabilitas = Fasildisabili::findOrFail($id);
-        $fasildisabilitas->delete();
-
-        Alert::success('Informasi Pesan!', 'Fasilitas Disabilitas Berhasil dihapus!');
         return back();
     }
 

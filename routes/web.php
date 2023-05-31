@@ -50,11 +50,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/foto/edit/{id}/update', [AdminController::class, 'updatefoto'])->name('ufoto');
     Route::post('/foto/{id}/destroy', [AdminController::class, 'destroyfoto'])->name('dfoto');
     //fasilanak
-    Route::get('/fasilanak/{id}', [AdminController::class, 'fasilanak'])->name('cfasilanak');
-    Route::post('/fasilanak', [AdminController::class, 'storefasilanak'])->name('sfasilanak');
-    Route::get('/fasilanak/edit/{id}', [AdminController::class, 'editfasilanak'])->name('efasilanak');
-    Route::post('/fasilanak/edit/{id}/update', [AdminController::class, 'updatefasilanak'])->name('ufasilanak');
-    Route::post('/fasilanak/{id}/destroy', [AdminController::class, 'destroyfasilanak'])->name('dfasilanak');
+    // Route::get('/fasilanak/{id}', [AdminController::class, 'fasilanak'])->name('cfasilanak');
+    // Route::post('/fasilanak', [AdminController::class, 'storefasilanak'])->name('sfasilanak');
+    // Route::get('/fasilanak/edit/{id}', [AdminController::class, 'editfasilanak'])->name('efasilanak');
+    // Route::post('/fasilanak/edit/{id}/update', [AdminController::class, 'updatefasilanak'])->name('ufasilanak');
+    // Route::post('/fasilanak/{id}/destroy', [AdminController::class, 'destroyfasilanak'])->name('dfasilanak');
     //fasilumum
     Route::get('/fasilumum/{id}', [AdminController::class, 'fasilumum'])->name('cfasilumum');
     Route::post('/fasilumum', [AdminController::class, 'storefasilumum'])->name('sfasilumum');
@@ -62,11 +62,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/fasilumum/edit/{id}/update', [AdminController::class, 'updatefasilumum'])->name('ufasilumum');
     Route::post('/fasilumum/{id}/destroy', [AdminController::class, 'destroyfasilumum'])->name('dfasilumum');
     //fasildisabilitas
-    Route::get('/fasildisabilitas/{id}', [AdminController::class, 'fasildisabilitas'])->name('cfasildisabilitas');
-    Route::post('/fasildisabilitas', [AdminController::class, 'storefasildisabilitas'])->name('sfasildisabilitas');
-    Route::get('/fasildisabilitas/edit/{id}', [AdminController::class, 'editfasildisabilitas'])->name('efasildisabilitas');
-    Route::post('/fasildisabilitas/edit/{id}/update', [AdminController::class, 'updatefasildisabilitas'])->name('ufasildisabilitas');
-    Route::post('/fasildisabilitas/{id}/destroy', [AdminController::class, 'destroyfasildisabilitas'])->name('dfasildisabilitas');
+    // Route::get('/fasildisabilitas/{id}', [AdminController::class, 'fasildisabilitas'])->name('cfasildisabilitas');
+    // Route::post('/fasildisabilitas', [AdminController::class, 'storefasildisabilitas'])->name('sfasildisabilitas');
+    // Route::get('/fasildisabilitas/edit/{id}', [AdminController::class, 'editfasildisabilitas'])->name('efasildisabilitas');
+    // Route::post('/fasildisabilitas/edit/{id}/update', [AdminController::class, 'updatefasildisabilitas'])->name('ufasildisabilitas');
+    // Route::post('/fasildisabilitas/{id}/destroy', [AdminController::class, 'destroyfasildisabilitas'])->name('dfasildisabilitas');
     //pimpinan
     Route::get('/pimpinan/{id}', [AdminController::class, 'pimpinan'])->name('cpimpinan');
     Route::post('/pimpinan', [AdminController::class, 'storepimpinan'])->name('spimpinan');
