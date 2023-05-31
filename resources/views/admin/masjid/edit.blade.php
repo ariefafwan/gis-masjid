@@ -20,6 +20,14 @@
                     <input type="text" name="name" class="form-control" value="{{ $masjid->name }}" id="name" required>
                 </div>
                 <div class="form-group">
+                    <label for="statustanah">Status Masjid</label>
+                    <select class="form-select" id="statustanah" aria-label="Default select example" name="statustanah" required>
+                        <option selected value="{{ $masjid->statustanah }}">{{ $masjid->statustanah }}</option>
+                        <option value="Aktif">Aktif</option>
+                        <option value="Tidak Aktif">Tidak Aktif</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="alamat">Alamat Masjid</label>
                     <textarea class="form-control" id="alamat" name="alamat" rows="2" required>{{ $masjid->alamat }}</textarea>
                 </div>
@@ -30,6 +38,14 @@
                 <div class="form-group">
                     <label for="dayatampung">Daya Tampung Masjid (Jiwa)</label>
                     <input type="number" name="dayatampung" value="{{ $masjid->dayatampung }}" class="form-control" id="dayatampung" required>
+                </div>
+                <div class="form-group">
+                    <label for="statustanah">Status Tanah</label>
+                    <select class="form-select" id="statustanah" aria-label="Default select example" name="statustanah" required>
+                        <option selected value="{{ $masjid->statustanah }}">{{ $masjid->statustanah }}</option>
+                        <option value="Pribadi">Pribadi</option>
+                        <option value="Wakaf">Wakaf</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="pembangunan">Skala Pembangunan (%)</label>
