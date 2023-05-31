@@ -19,7 +19,7 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-8">
-                        <h1 class="title">Peta Lokasi Wisata</h1>
+                        <h1 class="title">Peta Lokasi Masjid</h1>
                         <div class="row align-items-center">
                             <div class="mb-4" id="map"></div>
                         </div>
