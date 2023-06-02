@@ -19,19 +19,28 @@
               <hr>
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Alamat</h6>
+                  <h6 class="mb-0">Tahun Berdirinya Masjid</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ $masjid->alamat }}
+                  {{ $masjid->berdirinya }}
                 </div>
               </div>
               <hr>
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Daya Tampung</h6>
+                  <h6 class="mb-0">Status Masjid</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ $masjid->dayatampung }} Jiwa
+                  {{ $masjid->statusmasjid }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Alamat</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{ $masjid->alamat }}
                 </div>
               </div>
               <hr>
@@ -46,10 +55,55 @@
               <hr>
               <div class="row">
                 <div class="col-sm-3">
+                  <h6 class="mb-0">Daya Tampung</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{ $masjid->dayatampung }} Jiwa
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Status Tanah</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{ $masjid->statustanah }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Luas Tanah</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{ $masjid->luastanah }} M<sup>2</sup>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Dana Yang Diperlukan</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{ $masjid->dana }}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
                   <h6 class="mb-0">Skala Pembangunan</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
                   {{ $masjid->PembangunanName }} %
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Luas Bangunan</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{ $masjid->luasbangunan }} M<sup>2</sup>
                 </div>
               </div>
               <hr>
