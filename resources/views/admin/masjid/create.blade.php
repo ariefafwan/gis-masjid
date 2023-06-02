@@ -20,11 +20,20 @@
                     <input type="text" name="name" class="form-control" id="name" required>
                 </div>
                 <div class="form-group">
-                    <label for="statustanah">Status Masjid</label>
-                    <select class="form-select" id="statustanah" aria-label="Default select example" name="statustanah" required>
-                        <option selected>-- Pilih Masjid --</option>
+                    <label for="berdirinya">Tahun Berdirinya Masjid</label>
+                    <input type="date" name="berdirinya" class="form-control" id="berdirinya" required>
+                </div>
+                <div class="form-group">
+                    <label for="namapengurus">Nama Pengurus Masjid</label>
+                    <input type="text" name="namapengurus" class="form-control" id="namapengurus" required>
+                </div>
+                <div class="form-group">
+                    <label for="statusmasjid">Status Masjid</label>
+                    <select class="form-select" id="statusmasjid" aria-label="Default select example" name="statusmasjid" required>
+                        <option selected>-- Pilih Status Masjid --</option>
                         <option value="Aktif">Aktif</option>
-                        <option value="Tidak Aktif">Tidak Aktif</option>
+                        <option value="Dalam Pembangunan">Dalam Pembangunan</option>
+                        <option value="Tahap Renovasi">Tahap Renovasi</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -32,20 +41,31 @@
                     <textarea class="form-control" id="alamat" name="alamat" rows="2" required></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="luasbangunan">Luas Bangunan (M<sup>2</sup>)</label>
-                    <input type="number" name="luasbangunan" class="form-control" id="luasbangunan" required>
+                    <label for="luastanah">Luas Tanas (M<sup>2</sup>)</label>
+                    <input type="number" name="luastanah" class="form-control" id="luastanah" required>
                 </div>
                 <div class="form-group">
-                    <label for="dayatampung">Daya Tampung Masjid (Jiwa)</label>
-                    <input type="number" name="dayatampung" class="form-control" id="dayatampung" required>
+                    <label for="luasbangunan">Luas Bangunan (M<sup>2</sup>)</label>
+                    <input type="number" name="luasbangunan" class="form-control" id="luasbangunan" required>
                 </div>
                 <div class="form-group">
                     <label for="statustanah">Status Tanah</label>
                     <select class="form-select" id="statustanah" aria-label="Default select example" name="statustanah" required>
                         <option selected>-- Pilih Status Tanah --</option>
-                        <option value="Pribadi">Pribadi</option>
+                        <option value="Hibah">Hibah</option>
                         <option value="Wakaf">Wakaf</option>
+                        <option value="Beli">Beli</option>
+                        <option value="Pinjam Pakai">Pinjam Pakai</option>
+                        <option value="Girik">Girik</option>
                     </select>
+                </div>
+                <div class="form-group">
+                    <label for="dayatampung">Daya Tampung Jamaah (Jiwa)</label>
+                    <input type="number" name="dayatampung" class="form-control" id="dayatampung" required>
+                </div>
+                <div class="form-group">
+                    <label for="dana">Dana Yang Masih Di Butuhkan (Rp)</label>
+                    <input type="text" value="Tidak Ada" name="dana" class="form-control" id="dana">
                 </div>
                 <div class="form-group">
                     <label for="pembangunan">Skala Pembangunan (%)</label>
@@ -58,6 +78,10 @@
                         <option value="#EE6548">81-100</option>
                     </select>
                 </div>
+                {{-- <div class="form-group">
+                    <label for="sejarah">Sejarah</label>
+                    <textarea class="summernote" id="summernote" name="sejarah"></textarea>
+                </div> --}}
                 <div class="form-group">
                     <label for="latitude">Latitude</label>
                     <input type="text" name="latitude" class="form-control" id="latitude" required>

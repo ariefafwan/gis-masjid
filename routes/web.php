@@ -37,17 +37,23 @@ Route::middleware('auth')->group(function () {
     Route::get('/editmasjid/{id}', [AdminController::class, 'editmasjid'])->name('editmasjid');
     Route::post('/editmasjid/{id}/update', [AdminController::class, 'updatemasjid'])->name('updatemasjid');
     Route::post('/editmasjid/{id}/destroy', [AdminController::class, 'destroymasjid'])->name('destroymasjid');
+    //sejarah
+    Route::get('/sejarah/{id}', [AdminController::class, 'sejarah'])->name('csejarah');
+    Route::post('/sejarah', [AdminController::class, 'storesejarah'])->name('ssejarah');
+    Route::get('/sejarah/edit/{id}', [AdminController::class, 'editsejarah'])->name('esejarah');
+    Route::post('/sejarah/edit/{id}/update', [AdminController::class, 'updatesejarah'])->name('usejarah');
+    Route::post('/sejarah/{id}/destroy', [AdminController::class, 'destroysejarah'])->name('dsejarah');
     //kegitan
-    Route::get('/kegiatan/{id}', [AdminController::class, 'kegiatan'])->name('ckegiatan');
-    Route::post('/kegitan', [AdminController::class, 'storekegiatan'])->name('skegiatan');
-    Route::get('/kegiatan/edit/{id}', [AdminController::class, 'editkegiatan'])->name('ekegiatan');
-    Route::post('/kegiatan/edit/{id}/update', [AdminController::class, 'updatekegiatan'])->name('ukegiatan');
-    Route::post('/kegiatan/{id}/destroy', [AdminController::class, 'destroykegiatan'])->name('dkegiatan');
+    // Route::get('/kegiatan/{id}', [AdminController::class, 'kegiatan'])->name('ckegiatan');
+    // Route::post('/kegitan', [AdminController::class, 'storekegiatan'])->name('skegiatan');
+    // Route::get('/kegiatan/edit/{id}', [AdminController::class, 'editkegiatan'])->name('ekegiatan');
+    // Route::post('/kegiatan/edit/{id}/update', [AdminController::class, 'updatekegiatan'])->name('ukegiatan');
+    // Route::post('/kegiatan/{id}/destroy', [AdminController::class, 'destroykegiatan'])->name('dkegiatan');
     //foto
     Route::get('/foto/{id}', [AdminController::class, 'foto'])->name('cfoto');
     Route::post('/foto', [AdminController::class, 'storefoto'])->name('sfoto');
-    Route::get('/foto/edit/{id}', [AdminController::class, 'editfoto'])->name('efoto');
-    Route::post('/foto/edit/{id}/update', [AdminController::class, 'updatefoto'])->name('ufoto');
+    // Route::get('/foto/edit/{id}', [AdminController::class, 'editfoto'])->name('efoto');
+    // Route::post('/foto/edit/{id}/update', [AdminController::class, 'updatefoto'])->name('ufoto');
     Route::post('/foto/{id}/destroy', [AdminController::class, 'destroyfoto'])->name('dfoto');
     //fasilanak
     // Route::get('/fasilanak/{id}', [AdminController::class, 'fasilanak'])->name('cfasilanak');
@@ -61,6 +67,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/fasilumum/edit/{id}', [AdminController::class, 'editfasilumum'])->name('efasilumum');
     Route::post('/fasilumum/edit/{id}/update', [AdminController::class, 'updatefasilumum'])->name('ufasilumum');
     Route::post('/fasilumum/{id}/destroy', [AdminController::class, 'destroyfasilumum'])->name('dfasilumum');
+    //video
+    Route::get('/video/{id}', [AdminController::class, 'video'])->name('cvideo');
+    Route::post('/video', [AdminController::class, 'storevideo'])->name('svideo');
+    // Route::get('/video/edit/{id}', [AdminController::class, 'editvideo'])->name('evideo');
+    // Route::post('/video/edit/{id}/update', [AdminController::class, 'updatevideo'])->name('uvideo');
+    Route::post('/video/{id}/destroy', [AdminController::class, 'destroyvideo'])->name('dvideo');
     //fasildisabilitas
     // Route::get('/fasildisabilitas/{id}', [AdminController::class, 'fasildisabilitas'])->name('cfasildisabilitas');
     // Route::post('/fasildisabilitas', [AdminController::class, 'storefasildisabilitas'])->name('sfasildisabilitas');
@@ -68,11 +80,11 @@ Route::middleware('auth')->group(function () {
     // Route::post('/fasildisabilitas/edit/{id}/update', [AdminController::class, 'updatefasildisabilitas'])->name('ufasildisabilitas');
     // Route::post('/fasildisabilitas/{id}/destroy', [AdminController::class, 'destroyfasildisabilitas'])->name('dfasildisabilitas');
     //pimpinan
-    Route::get('/pimpinan/{id}', [AdminController::class, 'pimpinan'])->name('cpimpinan');
-    Route::post('/pimpinan', [AdminController::class, 'storepimpinan'])->name('spimpinan');
-    Route::get('/pimpinan/edit/{id}', [AdminController::class, 'editpimpinan'])->name('epimpinan');
-    Route::post('/pimpinan/edit/{id}/update', [AdminController::class, 'updatepimpinan'])->name('upimpinan');
-    Route::post('/pimpinan/edit/{id}/destroy', [AdminController::class, 'destroypimpinan'])->name('dpimpinan');
+    // Route::get('/pimpinan/{id}', [AdminController::class, 'pimpinan'])->name('cpimpinan');
+    // Route::post('/pimpinan', [AdminController::class, 'storepimpinan'])->name('spimpinan');
+    // Route::get('/pimpinan/edit/{id}', [AdminController::class, 'editpimpinan'])->name('epimpinan');
+    // Route::post('/pimpinan/edit/{id}/update', [AdminController::class, 'updatepimpinan'])->name('upimpinan');
+    // Route::post('/pimpinan/edit/{id}/destroy', [AdminController::class, 'destroypimpinan'])->name('dpimpinan');
     //json
     Route::get('getmasjid/masjid', [AdminController::class, 'masjid']);
 });

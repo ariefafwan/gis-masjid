@@ -9,15 +9,15 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Tambah Fasilitas Umum {{ $masjid->name }}</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Tambah Sejarah {{ $masjid->name }}</h6>
         </div>
         <div class="card-body">
             <!-- Main content -->
-            <form class="form-horizontal style-form" style="margin-top: 10px;" action="{{ route('sfasilumum') }}" method="POST" enctype="multipart/form-data">
+            <form class="form-horizontal style-form" style="margin-top: 10px;" action="{{ route('ssejarah') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="form-group">
-                    <label for="name">Nama Fasilitas</label>
-                    <input type="text" name="name" class="form-control" id="name" required>
+                <div class="form-group">                    
+                    <label for="summernote">Sejarah</label>
+                    <textarea class="summernote" id="summernote" name="sejarah"></textarea>
                     <input type="hidden" name="masjid_id" value="{{ $masjid->id }}" class="form-control" id="masjid_id" required>
                 </div>
                 <div class="box-footer mt-2">

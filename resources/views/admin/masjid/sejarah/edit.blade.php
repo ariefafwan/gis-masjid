@@ -9,23 +9,23 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Tambah Kegiatan Masjid</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Edit Sejarah {{ $sejarah->name }}</h6>
         </div>
         <div class="card-body">
             <!-- Main content -->
-            <form class="form-horizontal style-form" style="margin-top: 10px;" action="{{ route('skegiatan') }}" method="POST" enctype="multipart/form-data">
+            <form class="form-horizontal style-form" style="margin-top: 10px;" action="{{ route('usejarah', $sejarah->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="name">Nama Kegiatan</label>
-                    <input type="text" name="name" class="form-control" id="name" required>
-                    <input type="hidden" name="masjid_id" value="{{ $masjid->id }}" class="form-control" id="masjid_id" required>
+                    <textarea class="summernote" id="summernote" name="sejarah"></textarea>
+                    <input type="hidden" name="masjid_id" value="{{ $sejarah->masjid_id }}" class="form-control" id="masjid_id" required>
                 </div>
                 <div class="box-footer mt-2">
-                    <a href="{{ route('editmasjid', $masjid->id) }}" class="btn btn-danger btn-flat">
+                    <a href="{{ route('showmasjid', $sejarah->masjid_id) }}" class="btn btn-danger btn-flat">
                         Kembali
                     </a>
-                    <button type="submit" class="btn btn-primary btn-flat">
-                        Tambah
+                    <button type="submit" class="btn btn-success btn-flat">
+                        Edit
                     </button>
                 </div>
                 <div style="margin-top: 20px;"></div>

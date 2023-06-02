@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pimpinans', function (Blueprint $table) {
+        Schema::create('sejarahs', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('masjid_id')->unsigned();
             $table->foreign('masjid_id')->references('id')->on('masjids')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('pimpinan');
-            $table->string('jmlhpengurus');
-            $table->string('imam');
+            $table->longText('sejarah');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pimpinans');
+        Schema::dropIfExists('sejarahs');
     }
 };
