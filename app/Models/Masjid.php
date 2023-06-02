@@ -10,19 +10,9 @@ class Masjid extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function fasilanak()
-    {
-        return $this->hasMany(Fasilanak::class);
-    }
-
     public function fasilumum()
     {
         return $this->hasMany(Fasilumum::class);
-    }
-
-    public function fasildisabili()
-    {
-        return $this->hasMany(Fasildisabili::class);
     }
 
     public function foto()
@@ -30,14 +20,14 @@ class Masjid extends Model
         return $this->hasMany(Foto::class);
     }
 
-    public function kegiatan()
+    public function video()
     {
-        return $this->hasMany(Kegiatan::class);
+        return $this->hasMany(Video::class);
     }
 
-    public function pimpinan()
+    public function sejarah()
     {
-        return $this->hasOne(Pimpinan::class);
+        return $this->hasOne(Sejarah::class);
     }
 
     public function getPembangunanNameAttribute()
@@ -52,8 +42,6 @@ class Masjid extends Model
         } elseif ($pembangunan == "#E35131") {
             return '61-80';
         }
-            return '81-100';
-
+        return '81-100';
     }
-
 }

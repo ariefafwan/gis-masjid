@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Fasilanak;
-use App\Models\Fasildisabili;
 use App\Models\Fasilumum;
 use App\Models\Foto;
-use App\Models\Kegiatan;
 use App\Models\Masjid;
-use App\Models\Pimpinan;
+use App\Models\Sejarah;
+use App\Models\Video;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -34,20 +33,24 @@ class AdminController extends Controller
     public function createmasjid()
     {
         $page = "Tambah Masjid";
-        $masjid = Masjid::latest()->paginate(10);
-        return view('admin.masjid.create', compact('page', 'masjid'));
+        return view('admin.masjid.create', compact('page'));
     }
 
     public function storemasjid(Request $request)
     {
+        $year = Carbon::parse($request->berdirinya)->year;
 
         $dtUpload = new Masjid();
         $dtUpload->name = $request->name;
         $dtUpload->statusmasjid = $request->statusmasjid;
+        $dtUpload->namapengurus = $request->namapengurus;
         $dtUpload->alamat = $request->alamat;
+        $dtUpload->berdirinya = $year;
         $dtUpload->luasbangunan = $request->luasbangunan;
         $dtUpload->dayatampung = $request->dayatampung;
         $dtUpload->statustanah = $request->statustanah;
+        $dtUpload->luastanah = $request->luastanah;
+        $dtUpload->dana = $request->dana;
         $dtUpload->latitude = $request->latitude;
         $dtUpload->longitude = $request->longitude;
         $dtUpload->pembangunan = $request->pembangunan;
@@ -61,6 +64,7 @@ class AdminController extends Controller
         }
         $dtUpload->save();
 
+        // dd($year);
         Alert::success('Informasi Pesan!', 'Madjid Baru Berhasil ditambahkan');
         return redirect()->route('masjid');
     }
@@ -76,13 +80,13 @@ class AdminController extends Controller
     {
         $page = "Profile Masjid";
         $masjid = Masjid::findOrFail($id);
+        $sejarah = Sejarah::where('masjid_id', $id)->get();
+        $video = Video::where('masjid_id', $id)->get();
         $fasilumum = Fasilumum::where('masjid_id', $id)->get();
-        $kegiatan = Kegiatan::where('masjid_id', $id)->get();
-        $pimpinan = Pimpinan::where('masjid_id', $id)->get();
         $foto = Foto::where('masjid_id', $id)->get();
         return view(
             'admin.masjid.show',
-            compact('page', 'masjid', 'fasilumum', 'kegiatan', 'pimpinan', 'foto')
+            compact('page', 'masjid', 'fasilumum', 'foto', 'video', 'sejarah')
         );
     }
 
@@ -96,13 +100,19 @@ class AdminController extends Controller
     public function updatemasjid(Request $request, $id)
     {
 
+        $year = Carbon::parse($request->berdirinya)->year;
+
         $dtUpload = Masjid::findOrFail($id);
         $dtUpload->name = $request->name;
         $dtUpload->statusmasjid = $request->statusmasjid;
+        $dtUpload->namapengurus = $request->namapengurus;
         $dtUpload->alamat = $request->alamat;
+        $dtUpload->berdirinya = $year;
         $dtUpload->luasbangunan = $request->luasbangunan;
         $dtUpload->dayatampung = $request->dayatampung;
         $dtUpload->statustanah = $request->statustanah;
+        $dtUpload->luastanah = $request->luastanah;
+        $dtUpload->dana = $request->dana;
         $dtUpload->latitude = $request->latitude;
         $dtUpload->longitude = $request->longitude;
         $dtUpload->pembangunan = $request->pembangunan;
@@ -128,7 +138,7 @@ class AdminController extends Controller
     public function destroymasjid($id)
     {
         $masjid = Masjid::findOrFail($id);
-        Storage::delete('storage/geojson/' . $masjid->geojson);
+        Storage::delete('public/geojson/' . $masjid->geojson);
         $masjid->delete();
 
         Alert::success('Informasi Pesan!', 'Masjid Berhasil dihapus!');
@@ -139,7 +149,7 @@ class AdminController extends Controller
     public function fasilumum($id)
     {
         $masjid = Masjid::findOrFail($id);
-        $page = "Tambah Fasilitas Umum Masjid $masjid->name";
+        $page = "Tambah Fasilitas Umum $masjid->name";
         return view('admin.masjid.fasilumum.create', compact('page', 'masjid'));
     }
 
@@ -159,7 +169,7 @@ class AdminController extends Controller
     public function editfasilumum($id)
     {
         $fasilumum = Fasilumum::findOrFail($id);
-        $page = "Tambah Fasilitas Umum Masjid";
+        $page = "Edit Fasilitas Umum Masjid";
         return view('admin.masjid.fasilumum.edit', compact('page', 'fasilumum'));
     }
 
@@ -185,107 +195,52 @@ class AdminController extends Controller
         return back();
     }
 
-    //kegiatan
-    public function kegiatan($id)
+    public function sejarah($id)
     {
         $masjid = Masjid::findOrFail($id);
-        $page = "Tambah Kegiatan Umum Masjid $masjid->name";
-        return view('admin.masjid.kegiatan.create', compact('page', 'masjid'));
+        $page = "Tambah Sejarah $masjid->name";
+        return view('admin.masjid.sejarah.create', compact('page', 'masjid'));
     }
 
-    public function storekegiatan(Request $request)
+    public function storesejarah(Request $request)
     {
         $masjid = $request->masjid_id;
 
-        $dtUpload = new Kegiatan();
+        $dtUpload = new Sejarah();
         $dtUpload->masjid_id = $request->masjid_id;
-        $dtUpload->name = $request->name;
+        $dtUpload->sejarah = $request->sejarah;
         $dtUpload->save();
 
-        Alert::success('Informasi Pesan!', 'Kegiatan Masjid Baru Berhasil ditambahkan');
+        Alert::success('Informasi Pesan!', 'Sejarah Masjid Berhasil ditambahkan');
         return redirect()->route('showmasjid', $masjid);
     }
 
-    public function editkegiatan($id)
+    public function editsejarah($id)
     {
-        $kegiatan = Kegiatan::findOrFail($id);
-        $page = "Tambah Kegiatan Umum Masjid";
-        return view('admin.masjid.kegiatan.edit', compact('page', 'kegiatan'));
+        $sejarah = Sejarah::findOrFail($id);
+        $page = "Edit Sejarah Masjid ";
+        return view('admin.masjid.sejarah.edit', compact('page', 'sejarah'));
     }
 
-    public function updatekegiatan(Request $request, $id)
+    public function updatesejarah(Request $request, $id)
     {
         $masjid = $request->masjid_id;
 
-        $dtUpload = Kegiatan::findOrFail($id);
+        $dtUpload = Sejarah::findOrFail($id);
         $dtUpload->masjid_id = $request->masjid_id;
-        $dtUpload->name = $request->name;
+        $dtUpload->sejarah = $request->sejarah;
         $dtUpload->save();
 
-        Alert::success('Informasi Pesan!', 'Kegiatan Masjid Berhasil diupdate');
+        Alert::success('Informasi Pesan!', 'Sejarah Masjid Berhasil diupdate');
         return redirect()->route('showmasjid', $masjid);
     }
 
-    public function destroykegiatan($id)
+    public function destroysejarah($id)
     {
-        $kegiatan = Kegiatan::findOrFail($id);
-        $kegiatan->delete();
+        $sejarah = Sejarah::findOrFail($id);
+        $sejarah->delete();
 
-        Alert::success('Informasi Pesan!', 'Kegiatan Berhasil dihapus!');
-        return back();
-    }
-
-    //pimpinan
-    public function pimpinan($id)
-    {
-        $masjid = Masjid::findOrFail($id);
-        $page = "Tambah Pimpinan Masjid $masjid->name";
-        return view('admin.masjid.pimpinan.create', compact('page', 'masjid'));
-    }
-
-    public function storepimpinan(Request $request)
-    {
-        $masjid = $request->masjid_id;
-
-        $dtUpload = new Pimpinan();
-        $dtUpload->masjid_id = $request->masjid_id;
-        $dtUpload->pimpinan = $request->pimpinan;
-        $dtUpload->jmlhpengurus = $request->jmlhpengurus;
-        $dtUpload->imam = $request->imam;
-        $dtUpload->save();
-
-        Alert::success('Informasi Pesan!', 'Pimpinan Masjid Baru Berhasil ditambahkan');
-        return redirect()->route('showmasjid', $masjid);
-    }
-
-    public function editpimpinan($id)
-    {
-        $pimpinan = Pimpinan::findOrFail($id);
-        $page = "Tambah Pimpinan Masjid";
-        return view('admin.masjid.pimpinan.edit', compact('page', 'pimpinan'));
-    }
-
-    public function updatepimpinan(Request $request, $id)
-    {
-        $masjid = $request->masjid_id;
-
-        $dtUpload = Pimpinan::findOrFail($id);
-        $dtUpload->masjid_id = $request->masjid_id;
-        $dtUpload->pimpinan = $request->pimpinan;
-        $dtUpload->jmlhpengurus = $request->jmlhpengurus;
-        $dtUpload->imam = $request->imam;
-        $dtUpload->save();
-
-        Alert::success('Informasi Pesan!', 'Pimpinan Masjid Berhasil Diupdate');
-        return redirect()->route('showmasjid', $masjid);
-    }
-
-    public function destroypimpinan($id)
-    {
-        $pimpinan = Pimpinan::findOrFail($id);
-        $pimpinan->delete();
-
-        Alert::success('Informasi Pesan!', 'Pimpinan Berhasil dihapus!');
+        Alert::success('Informasi Pesan!', 'Sejarah Masjid Berhasil dihapus!');
         return back();
     }
 
@@ -300,48 +255,133 @@ class AdminController extends Controller
     public function storefoto(Request $request)
     {
         $masjid = $request->masjid_id;
-        $nm = $request->galeri;
-        $namaFile = $nm->getClientOriginalName();
 
         $dtUpload = new Foto();
         $dtUpload->masjid_id = $request->masjid_id;
-        $dtUpload->galeri = $namaFile;
+        $file = $request->file('galeri');
+        if ($request->validate([
+            'galeri' => 'required|mimes:png,jpg,jpeg|max:10000'
+        ])) {
+            $filename = $file->getClientOriginalName();
+            $file->storeAs('public/galeri/foto/', $filename);
+            $dtUpload->galeri = $filename;
+        }
         $dtUpload->save();
 
-        $nm->move(public_path() . '/storage/galeri', $namaFile);
         Alert::success('Informasi Pesan!', 'Galeri Masjid Baru Berhasil ditambahkan');
         return redirect()->route('showmasjid', $masjid);
     }
 
-    public function editfoto($id)
-    {
-        $foto = Foto::findOrFail($id);
-        $page = "Edit Galeri Masjid";
-        return view('admin.masjid.foto.edit', compact('page', 'foto'));
-    }
+    // public function editfoto($id)
+    // {
+    //     $foto = Foto::findOrFail($id);
+    //     $page = "Edit Galeri Masjid";
+    //     return view('admin.masjid.foto.edit', compact('page', 'foto'));
+    // }
 
-    public function uploadfoto(Request $request, $id)
-    {
-        $masjid = $request->masjid_id;
-        $nm = $request->galeri;
-        $namaFile = $nm->getClientOriginalName();
+    // public function updatevideo(Request $request, $id)
+    // {
+    //     $masjid = $request->masjid_id;
 
-        $dtUpload = Foto::findOrFail($id);
-        $dtUpload->masjid_id = $request->masjid_id;
-        $dtUpload->galeri = $namaFile;
-        $dtUpload->save();
+    //     $dtUpload = Foto::findOrFail($id);
+    //     $dtUpload->masjid_id = $request->masjid_id;
+    //     $file = $request->file('gambar');
+    //     if ($request->validate([
+    //         'gambar' => 'required|mimes:png,jpg,jpeg|max:2048'
+    //     ])) {
+    //         // menghapus gambar lama
+    //         if ($request->oldImage) {
+    //             Storage::delete('public/galeri/foto' . $dtUpload->gambar);
+    //         }
+    //         // menyimpan gambar baru
+    //         $filename = $file->getClientOriginalName();
+    //         $file->storeAs('public/galeri/foto', $filename);
+    //         $dtUpload->gambar = $filename;
+    //     }
+    //     // $dtUpload->gambar = $request->gambar;
+    //     $dtUpload->save();
 
-        $nm->move(public_path() . '/storage/galeri', $namaFile);
-        Alert::success('Informasi Pesan!', 'Galeri Masjid Berhasil Diupdate');
-        return redirect()->route('showmasjid', $masjid);
-    }
+    //     Alert::success('Informasi Pesan!', 'Galeri Masjid Berhasil Diupdate');
+    //     return redirect()->route('showmasjid', $masjid);
+    // }
 
     public function destroyfoto($id)
     {
         $foto = Foto::findOrFail($id);
+        Storage::delete('public/galeri/foto/' . $foto->galeri);
         $foto->delete();
 
         Alert::success('Informasi Pesan!', 'Foto Berhasil dihapus!');
+        return back();
+    }
+
+    //video
+    public function video($id)
+    {
+        $masjid = Masjid::findOrFail($id);
+        $page = "Tambah Galeri Video $masjid->name";
+        return view('admin.masjid.video.create', compact('page', 'masjid'));
+    }
+
+    public function storevideo(Request $request)
+    {
+        $masjid = $request->masjid_id;
+
+        $dtUpload = new Video();
+        $dtUpload->masjid_id = $request->masjid_id;
+        $file = $request->file('video');
+        if ($request->validate([
+            'video'  => 'required|mimes:mp4,mov,ogg,qt | max:20000'
+        ])) {
+            $filename = $file->getClientOriginalName();
+            $file->storeAs('public/galeri/video/', $filename);
+            $dtUpload->video = $filename;
+        }
+        $dtUpload->save();
+
+        Alert::success('Informasi Pesan!', 'Galeri Video Masjid Berhasil ditambahkan');
+        return redirect()->route('showmasjid', $masjid);
+    }
+
+    // public function editvideo($id)
+    // {
+    //     $video = Video::findOrFail($id);
+    //     $page = "Edit Galeri Video Masjid";
+    //     return view('admin.masjid.video.edit', compact('page', 'video'));
+    // }
+
+    // public function updatevideo(Request $request, $id)
+    // {
+    //     $masjid = $request->masjid_id;
+
+    //     $dtUpload = Video::findOrFail($id);
+    //     $dtUpload->masjid_id = $request->masjid_id;
+    //     if ($request->validate([
+    //         'video' => 'required|mimes:png,jpg,jpeg|max:2048'
+    //     ])) {
+    //         // menghapus gambar lama
+    //         if ($request->oldImage) {
+    //             Storage::delete('public/galeri/video' . $dtUpload->video);
+    //         }
+    //         // menyimpan gambar baru
+    //         $filename = $file->getClientOriginalName();
+    //         $file->storeAs('public/galeri/video', $filename);
+    //         $dtUpload->gambar = $filename;
+    //     }
+    //     // $dtUpload->gambar = $request->gambar;
+    //     $dtUpload->save();
+
+    //     Alert::success('Informasi Pesan!', 'Video Masjid Berhasil Diupdate');
+    //     return redirect()->route('showmasjid', $masjid);
+    // }
+
+    public function destroyvideo($id)
+    {
+        $video = Video::findOrFail($id);
+        Storage::delete('public/galeri/video/' . $video->video);
+        $video->delete();
+
+        Alert::success('Informasi Pesan!', 'Video Berhasil dihapus!');
         return back();
     }
 }

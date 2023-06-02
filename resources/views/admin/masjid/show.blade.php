@@ -70,60 +70,6 @@
         </div>
 
         <div class="col-md-12 mt-3">
-          <h2>Pimpinan Masjid</h2>
-          @if ($pimpinan->count() == 1)
-          <div class="box">
-            <div class="box-body">
-                <table id="category-table" class="table table-light table-striped table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th class="text-center">#</th>
-                            <th class="text-center">Nama Pimpinan</th>
-                            <th class="text-center">Nama Imam</th>
-                            <th class="text-center">Jumlah Pengurus</th>
-                            <th class="text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($pimpinan as $pimpinan)
-                        <tr>
-                          <th class="text-center">{{ $loop->iteration }}</th>
-                            <td align="center">{{ $pimpinan->pimpinan }}</td>
-                            <td align="center">{{ $pimpinan->imam }}</td>
-                            <td align="center">{{ $pimpinan->jmlhpengurus }}</td>
-                            <td align="center">
-                                <div class="btn-group">
-                                    <hr>
-                                    <a href="{{ route('epimpinan',$pimpinan->id) }}" class="btn btn-warning mr-2"><i class="bi bi-pencil-fill"></i></a>
-                                    <hr>
-                                    <a href="javascript:void(0)" class="btn btn-danger"
-                                        onclick="event.preventDefault();
-                                            document.getElementById('pimpinan-delete-form-{{$pimpinan->id}}').submit();">
-                                        <i class="bi bi-trash3"></i>
-                                    </a>
-                                    <form id="pimpinan-delete-form-{{$pimpinan->id}}" action="{{ route('dpimpinan',$pimpinan->id) }}" method="POST" style="display: none;">
-                                        @csrf 
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-          </div>
-              
-          @else
-              <p>Data Tidak Ditemukan</p>
-              <div class="row">
-                <div class="col-sm-12">
-                  <a class="btn btn-secondary" href="{{ route('cpimpinan', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
-                </div>
-              </div>
-          @endif
-        </div>
-
-        <div class="col-md-12 mt-3">
           <h2>Fasilitas Umum</h2>
           @if ($fasilumum->count() >= 1)
           <div class="box">
@@ -179,11 +125,11 @@
         </div>
 
         <div class="col-md-12 mt-3">
-          <h2>Kegiatan Masjid</h2>
-          @if ($kegiatan->count() >= 1)
+          <h2>Sejarah Masjid</h2>
+          @if ($sejarah->count() >= 1)
           <div class="box">
             <div class="box-body">
-                <table id="category-table" class="table table-light table-striped table-bordered table-hover">
+                {{-- <table id="category-table" class="table table-light table-striped table-bordered table-hover">
                     <thead>
                         <tr>
                             <th class="text-center">#</th>
@@ -192,21 +138,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($kegiatan as $kegiatan)
+                        @foreach($sejarah as $sejarah)
                         <tr>
                           <th class="text-center">{{ $loop->iteration }}</th>
-                            <td>{{ $kegiatan->name }}</td>
+                            <td>{{ $sejarah->sejarah }}</td>
                             <td align="center">
                                 <div class="btn-group">
                                     <hr>
-                                    <a href="{{ route('ekegiatan',$kegiatan->id) }}" class="btn btn-warning mr-2"><i class="bi bi-pencil-fill"></i></a>
+                                    <a href="{{ route('esejarah',$sejarah->id) }}" class="btn btn-warning mr-2"><i class="bi bi-pencil-fill"></i></a>
                                     <hr>
                                     <a href="javascript:void(0)" class="btn btn-danger"
                                         onclick="event.preventDefault();
-                                            document.getElementById('kegiatan-delete-form-{{$kegiatan->id}}').submit();">
+                                            document.getElementById('sejarah-delete-form-{{$sejarah->id}}').submit();">
                                         <i class="bi bi-trash3"></i>
                                     </a>
-                                    <form id="kegiatan-delete-form-{{$kegiatan->id}}" action="{{ route('dkegiatan',$kegiatan->id) }}" method="POST" style="display: none;">
+                                    <form id="sejarah-delete-form-{{$sejarah->id}}" action="{{ route('dsejarah',$sejarah->id) }}" method="POST" style="display: none;">
                                         @csrf 
                                     </form>
                                 </div>
@@ -214,12 +160,29 @@
                         </tr>
                         @endforeach
                     </tbody>
-                </table>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12">
-              <a class="btn btn-secondary" href="{{ route('ckegiatan', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+                </table> --}}
+                @foreach ($sejarah as $sejarah)
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                      <h6 class="m-0 font-weight-bold text-primary">
+                        <a href="{{ route('esejarah',$sejarah->id) }}" class="btn btn-warning mr-2"><i class="bi bi-pencil-fill"></i></a>
+                      <a href="javascript:void(0)" class="btn btn-danger"
+                          onclick="event.preventDefault();
+                              document.getElementById('sejarah-delete-form-{{$sejarah->id}}').submit();">
+                          <i class="bi bi-trash3"></i>
+                      </a>
+                      <form id="sejarah-delete-form-{{$sejarah->id}}" action="{{ route('dsejarah',$sejarah->id) }}" method="POST" style="display: none;">
+                          @csrf 
+                      </form>
+                      </h6>
+                  </div>
+                  <div class="card-body">
+                      <!-- Main content -->
+                      {!! $sejarah->sejarah !!}
+                      {{-- {{ $sejarah->sejarah }} --}}
+                  </div>
+                @endforeach
+              </div>
             </div>
           </div>
               
@@ -227,14 +190,14 @@
               <p>Data Tidak Ditemukan</p>
               <div class="row">
                 <div class="col-sm-12">
-                  <a class="btn btn-secondary" href="{{ route('ckegiatan', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+                  <a class="btn btn-secondary" href="{{ route('csejarah', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
                 </div>
               </div>
           @endif
         </div>
 
         <div class="col-md-12 mt-3">
-          <h2>Galeri</h2>
+          <h2>Galeri Foto</h2>
           @if ($foto->count() >= 1)
           <div class="box">
             <div class="box-body">
@@ -251,12 +214,11 @@
                         <tr>
                           <th class="text-center">{{ $loop->iteration }}</th>
                             <td>
-                              <img src="/storage/galeri/{{ $foto->galeri }}" alt="{{ $foto->galeri }}" class="img-thumbnail" style="max-width:150px; max-height:170px">
+                              <img src="{{ asset('storage/galeri/foto/' . $foto->galeri ) }}" alt="{{ $foto->galeri }}" class="img-thumbnail" style="max-width:150px; max-height:170px">
                             </td>
                             <td align="center">
                                 <div class="btn-group">
-                                    <hr>
-                                    <a href="{{ route('efoto',$foto->id) }}" class="btn btn-warning mr-2"><i class="bi bi-pencil-fill"></i></a>
+                                    {{-- <a href="{{ route('efoto',$foto->id) }}" class="btn btn-warning mr-2"><i class="bi bi-pencil-fill"></i></a> --}}
                                     <hr>
                                     <a href="javascript:void(0)" class="btn btn-danger"
                                         onclick="event.preventDefault();
@@ -276,7 +238,7 @@
           </div>
           <div class="row">
             <div class="col-sm-12">
-              <a class="btn btn-secondary" href="{{ route('ckegiatan', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+              <a class="btn btn-secondary" href="{{ route('cfoto', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
             </div>
           </div>
               
@@ -284,7 +246,67 @@
               <p>Data Tidak Ditemukan</p>
               <div class="row">
                 <div class="col-sm-12">
-                  <a class="btn btn-secondary" href="{{ route('ckegiatan', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+                  <a class="btn btn-secondary" href="{{ route('cfoto', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+                </div>
+              </div>
+          @endif
+        </div>
+
+        <div class="col-md-12 mt-3">
+          <h2>Galeri Video</h2>
+          @if ($video->count() >= 1)
+          <div class="box">
+            <div class="box-body">
+                <table id="category-table" class="table table-light table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Video Masjid</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      @foreach ($video as $video)
+                        <tr>
+                          <th class="text-center">{{ $loop->iteration }}</th>
+                            <td>
+                              {{-- <img src="/storage/galeri/video/{{ $video->video }}" alt="{{ $video->video }}" class="img-thumbnail" style="max-width:150px; max-height:170px"> --}}
+                              <video controls width="500px">
+                                <source src="{{ asset('storage/galeri/video/' . $video->video ) }}" type="video/webm">
+                              </video>
+                            </td>
+                            <td align="center">
+                                <div class="btn-group">
+                                    <hr>
+                                    {{-- <a href="{{ route('evideo',$video->id) }}" class="btn btn-warning mr-2"><i class="bi bi-pencil-fill"></i></a> --}}
+                                    <hr>
+                                    <a href="javascript:void(0)" class="btn btn-danger"
+                                        onclick="event.preventDefault();
+                                            document.getElementById('foto-delete-form-{{$video->id}}').submit();">
+                                        <i class="bi bi-trash3"></i>
+                                    </a>
+                                    <form id="foto-delete-form-{{$video->id}}" action="{{ route('dvideo',$video->id) }}" method="POST" style="display: none;">
+                                        @csrf 
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <a class="btn btn-secondary" href="{{ route('cvideo', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
+            </div>
+          </div>
+              
+          @else
+              <p>Data Tidak Ditemukan</p>
+              <div class="row">
+                <div class="col-sm-12">
+                  <a class="btn btn-secondary" href="{{ route('cvideo', $masjid->id) }}"><i class="bi bi-plus-square"></i> Tambah Data</a>
                 </div>
               </div>
           @endif

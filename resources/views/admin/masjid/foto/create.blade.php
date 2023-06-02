@@ -22,7 +22,7 @@
                     <input type="hidden" name="masjid_id" value="{{ $masjid->id }}" class="form-control" id="masjid_id" required>
                 </div>
                 <div class="box-footer mt-2">
-                    <a href="{{ route('editmasjid', $masjid->id) }}" class="btn btn-danger btn-flat">
+                    <a href="{{ route('showmasjid', $masjid->id) }}" class="btn btn-danger btn-flat">
                         Kembali
                     </a>
                     <button type="submit" class="btn btn-primary btn-flat">

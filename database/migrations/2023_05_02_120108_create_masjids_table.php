@@ -16,13 +16,17 @@ return new class extends Migration
         Schema::create('masjids', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->year('berdirinya');
+            $table->string('namapengurus');
             $table->string('statusmasjid');
             $table->string('alamat');
-            $table->float('luasbangunan');
+            $table->bigInteger('luasbangunan');
             $table->bigInteger('dayatampung');
             $table->string('statustanah');
-            $table->string('latitude');
-            $table->string('longitude');
+            $table->bigInteger('luastanah');
+            $table->string('dana')->default('Tidak Ada');
+            $table->float('latitude');
+            $table->float('longitude');
             $table->string('geojson');
             $table->string('pembangunan');
             $table->timestamps();

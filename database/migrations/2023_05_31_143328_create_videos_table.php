@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('kegiatans', function (Blueprint $table) {
+        Schema::create('videos', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('masjid_id')->unsigned();
             $table->foreign('masjid_id')->references('id')->on('masjids')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('name');
+            $table->string('video');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kegiatans');
+        Schema::dropIfExists('videos');
     }
 };
