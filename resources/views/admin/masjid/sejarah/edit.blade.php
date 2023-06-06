@@ -17,7 +17,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="name">Nama Kegiatan</label>
-                    <textarea class="summernote" id="summernote" name="sejarah"></textarea>
+                    <textarea class="summernote" id="summernote" name="sejarah">{!! $sejarah->sejarah !!}</textarea>
                     <input type="hidden" name="masjid_id" value="{{ $sejarah->masjid_id }}" class="form-control" id="masjid_id" required>
                 </div>
                 <div class="box-footer mt-2">

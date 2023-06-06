@@ -30,7 +30,7 @@
                 <div class="form-group">
                     <label for="statusmasjid">Status Masjid</label>
                     <select class="form-select" id="statusmasjid" aria-label="Default select example" name="statusmasjid" required>
-                        <option selected value="{{ $masjid->statustanah }}">{{ $masjid->statustanah }}</option>
+                        <option selected value="{{ $masjid->statusmasjid }}">{{ $masjid->statusmasjid }}</option>
                         <option value="Aktif">Aktif</option>
                         <option value="Dalam Pembangunan">Dalam Pembangunan</option>
                         <option value="Tahap Renovasi">Tahap Renovasi</option>
