@@ -10,7 +10,7 @@ body {
 
 #mainNav {
     min-height: 3.5rem;
-    background-color: #fff;
+    background-color: #000000;
 }
 
 #mainNav .navbar-toggler {
@@ -25,13 +25,13 @@ body {
 }
 
 #mainNav .navbar-brand {
-    color: #000;
+    color: #ffffff;
     font-weight: 700;
     padding: 0.9rem 0;
 }
 
 #mainNav .navbar-nav .nav-item:hover {
-    color: fade(#fff, 80%);
+    color: fade(#ffffff, 80%);
     outline: none;
     background-color: transparent;
 }
@@ -75,7 +75,7 @@ body {
     }
 
     #mainNav.navbar-shrink .navbar-brand {
-        color: #000;
+        color: #ffffff;
     }
 
     #mainNav.navbar-shrink .nav-link {
@@ -85,7 +85,7 @@ body {
     }
 
     #mainNav.navbar-shrink .nav-link:hover {
-        color: #64a19d;
+        color: #66bbb5;
     }
 
     #mainNav.navbar-shrink .nav-link:active {
