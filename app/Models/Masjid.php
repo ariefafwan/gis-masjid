@@ -33,13 +33,13 @@ class Masjid extends Model
     public function getPembangunanNameAttribute()
     {
         $pembangunan = $this->pembangunan;
-        if ($pembangunan == "#781804") {
+        if ($pembangunan == "#8B0000") {
             return '1-20';
-        } elseif ($pembangunan == "#CB2602") {
+        } elseif ($pembangunan == "#FF4500") {
             return '21-40';
-        } elseif ($pembangunan == "#DE3611") {
+        } elseif ($pembangunan == "#FFFF00") {
             return '41-60';
-        } elseif ($pembangunan == "#E35131") {
+        } elseif ($pembangunan == "#00FF7F") {
             return '61-80';
         }
         return '81-100';
