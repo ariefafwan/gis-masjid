@@ -11,8 +11,7 @@
         <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
-        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
         <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
@@ -37,42 +36,14 @@
                         <a class="social-link rounded-circle text-white" href="#!"><i class="bi bi-github"></i></a>
                     </li>
                 </ul>
-                <p class="text-muted small">Copyright &copy; SIG-Masjid Aceh Tamiang 2023</p>
+                <p class="text-white small">Copyright &copy; SIG-Masjid Aceh Tamiang 2023</p>
             </div>
         </footer>
         <!-- Bootstrap core JS-->
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
-        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous">
-        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
         {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> --}}
         <!-- Core theme JS-->
         <script src="{{ asset ('js/scripts.js') }}"></script>
-        <script>
-    
-            let map = L.map('map').setView([4.2656737, 97.9327067], 11);
-            
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            }).addTo(map);
-        
-            <?php foreach ($masjid as $key => $row) { ?>
-                $.getJSON("storage/geojson/{{ $row->geojson }}", function(data) {
-                    geoLayer = L.geoJson(data, {
-                    style: function(feature) {
-                        return {
-                            color: "{{ $row->pembangunan }}",
-                            fillColor: '{{ $row->pembangunan }}',
-                        }
-                    },
-                }).addTo(map);
-        
-                    geoLayer.eachLayer(function(layer) {
-                        layer.bindPopup("{{ $row->name }}");
-                    });
-                });
-            <?php } ?>
-            
-        </script>
+        @yield('js')
 </body>
 </html>

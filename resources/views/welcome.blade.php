@@ -30,13 +30,13 @@
                         <div class="box">
                             <div class="box-body">
                                 <table id="category-table" class="table table-bordered table-hover">
-                                    <thead style="background-color: black">
+                                    <thead>
                                         <tr>
-                                            <th style="width: 5%" class="text-white text-center">#</th>
-                                            <th style="width: 30%" class="text-white text-center">Name</th>
-                                            <th class="text-white text-center">Alamat</th>
-                                            <th style="widht: 10%" class="text-white text-center">Skala Pembangunan</th>
-                                            <th style="widht: 5%" class="text-white text-center">Detail</th>
+                                            <th style="width: 5%" class="text-dark text-center">#</th>
+                                            <th style="width: 30%" class="text-dark text-center">Name</th>
+                                            <th class="text-dark text-center">Alamat</th>
+                                            <th style="widht: 10%" class="text-dark text-center">Skala Pembangunan</th>
+                                            <th style="widht: 5%" class="text-dark text-center">Detail</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -47,7 +47,7 @@
                                             <td>{{ $row->alamat }}</td>
                                             <td>{{ $row->PembangunanName }}</td>
                                             <td>
-                                                <a href="" class="btn btn-warning">
+                                                <a href="{{ route('masjid.detail', $row->id) }}" class="btn btn-warning">
                                                     <i class="bi bi-eye"></i>
                                                 </a>
                                             </td>
@@ -61,5 +61,32 @@
                 </div>
             </div>
         </section>
-        
+@endsection
+@section('js')
+<script>
+    let map = L.map('map').setView([4.2656737, 97.9327067], 11);
+    
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    <?php foreach ($masjid as $key => $row) { ?>
+        $.getJSON("storage/geojson/{{ $row->geojson }}", function(data) {
+            geoLayer = L.geoJson(data, {
+            style: function(feature) {
+                return {
+                    color: "{{ $row->pembangunan }}",
+                    fillColor: '{{ $row->pembangunan }}',
+                }
+            },
+        }).addTo(map);
+
+            geoLayer.eachLayer(function(layer) {
+                layer.bindPopup("{{ $row->name }}");
+            });
+        });
+    <?php } ?>
+    
+</script>
 @endsection
