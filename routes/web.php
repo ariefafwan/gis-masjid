@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [UserController::class, 'welcome'])->name('welcome');
+Route::get('detailmasjid/{id}', [UserController::class, 'detailmasjid'])->name('masjid.detail');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
