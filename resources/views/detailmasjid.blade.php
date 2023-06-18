@@ -82,6 +82,8 @@
                                             <td style="width: 2%">:</td>
                                             <td>{{ $masjid->dana }}</td>
                                         </tr>
+                                        <input type="hidden" id="latitude" value="{{ $masjid->latitude }}">
+                                        <input type="hidden" id="longitude" value="{{ $masjid->longitude }}">
                                         {{-- <tr>
                                           <td>Gejala</td>
                                           <td>:</td>
@@ -129,11 +131,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row mb-4">
                                         <div class="col-6">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <h5 class="card-title text-start"><i class="bi bi-images"></i></i>&nbspGaleri Foto Masjid</h5>
+                                                    <h5 class="card-title text-start"><i class="bi bi-images"></i>&nbspGaleri Foto Masjid</h5>
                                                     @if ($foto->count() >= 1)
                                                     <div class="d-flex justify-content-start mt-4">
                                                     <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#galerifoto"><i class="bi bi-eye"></i>&nbspLihat Galeri</button>
@@ -148,7 +150,7 @@
                                         <div class="col-6">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <h5 class="card-title text-start"><i class="bi bi-camera-video"></i></i>&nbspGaleri Video Masjid</h5>
+                                                    <h5 class="card-title text-start"><i class="bi bi-camera-video"></i>&nbspGaleri Video Masjid</h5>
                                                     @if ($video->count() >= 1)
                                                     <div class="d-flex justify-content-start mt-4">
                                                     <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#galerivideo"><i class="bi bi-eye"></i>&nbspLihat Galeri</button>
@@ -161,6 +163,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title text-center"><i class="bi bi-geo-alt-fill"></i>&nbspLokasi Masjid</h5>
+                                                <div class="mt-3" id="map"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -168,4 +178,32 @@
                 </div>
             </div>
         </section>
+@endsection
+@section('js')
+<script>
+    let latitude = document.getElementById("latitude").value;
+    let longitude = document.getElementById("longitude").value;
+
+    let map = L.map('map').setView([latitude, longitude], 12);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    var marker = L.icon({
+    iconUrl: '/asset/marker/mosquee.png',
+
+    iconSize:     [70, 95], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+
+    let popup = L.marker([latitude, longitude], {icon: marker}).addTo(map);
+
+    popup.bindPopup("<b>Lokasi Masjid").openPopup();
+
+</script>
 @endsection
