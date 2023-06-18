@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('statustanah');
             $table->bigInteger('luastanah');
             $table->string('dana')->default('Tidak Ada');
-            $table->float('latitude');
-            $table->float('longitude');
+            $table->string('latitude');
+            $table->string('longitude');
             $table->string('geojson');
             $table->string('pembangunan');
             $table->timestamps();

@@ -382,7 +382,7 @@
     let latitude = document.getElementById("latitude").value;
     let longitude = document.getElementById("longitude").value;
 
-    let map = L.map('map').setView([latitude, longitude], 13);
+    let map = L.map('map').setView([latitude, longitude], 12);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
@@ -392,7 +392,7 @@
     var marker = L.icon({
     iconUrl: '/asset/marker/mosquee.png',
 
-    iconSize:     [38, 45], // size of the icon
+    iconSize:     [70, 95], // size of the icon
     shadowSize:   [50, 64], // size of the shadow
     iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
     shadowAnchor: [4, 62],  // the same for the shadow
