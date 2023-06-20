@@ -10,9 +10,9 @@
             <div class="row">
                 @foreach ($foto as $f)
                 <div class="col-lg-3 col-md-4 col-6">
-                    <a href="#" class="d-block mb-4 h-100">
+                    <div class="d-block mb-4 h-100">
                         <img src="{{ asset('storage/galeri/foto/'.$f->galeri) }}" alt="{{ $f->galeri }}" class="img-fluid">
-                    </a>
+                    </div>
                 </div>
                 @endforeach
             </div>

@@ -331,7 +331,7 @@ class AdminController extends Controller
         $dtUpload->masjid_id = $request->masjid_id;
         $file = $request->file('video');
         if ($request->validate([
-            'video'  => 'required|mimes:mp4,mov,ogg,qt | max:20000'
+            'video'  => 'required|mimes:mp4,mov,ogg,qt | max:200000'
         ])) {
             $filename = $file->getClientOriginalName();
             $file->storeAs('public/galeri/video/', $filename);

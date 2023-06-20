@@ -10,7 +10,7 @@
             <div class="row">
                 @foreach ($video as $v)
                 <div class="col-lg-3 col-md-4 col-6">
-                    <video controls width="150px">
+                    <video controls width="400px">
                         <source src="{{ asset('storage/galeri/video/' . $v->video ) }}" type="video/webm" class="img-fluid">
                     </video>
                 </div>
