@@ -27,9 +27,7 @@
             <td>
                 @foreach ($sejarah as $item)
                 @if ($item->masjid_id == $m->id)
-                <ul>
-                    <li>{{ $item->sejarah }}</li>
-                </ul>
+                    {!! $item->sejarah !!}
                 @endif
                 @endforeach
             </td>
