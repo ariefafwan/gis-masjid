@@ -11,11 +11,24 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function welcome()
+    public function welcome(Request $request)
     {
         $page = "SIG MASJID";
-        $masjid = Masjid::all();
-        return view('welcome', compact('masjid', 'page'));
+        // $masjid = Masjid::all();
+        $pagination  = 10;
+        $masjid = Masjid::when($request->keyword, function ($query) use ($request) {
+
+            $query
+                ->where('name', 'like', "%{$request->keyword}%");
+        })->orderBy('created_at', 'desc')->paginate($pagination);
+
+        $masjid->appends($request->only('keyword'));
+
+        return view('welcome', compact('page'), [
+            'masjid' => $masjid,
+
+        ])->with('i', ($request->input('page', 1) - 1) * $pagination);
+        // return view('welcome', compact('masjid', 'page'));
     }
 
     public function detailmasjid($id)

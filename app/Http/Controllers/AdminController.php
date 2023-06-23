@@ -22,11 +22,24 @@ class AdminController extends Controller
         return view('admin.dashboard', compact('page', 'dt1', 'masjid'));
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $page = "Daftar Masjid";
-        $masjid = Masjid::latest()->paginate(10);
-        return view('admin.masjid.index', compact('page', 'masjid'));
+        // $masjid = Masjid::latest()->paginate(10);
+        $pagination  = 10;
+        $masjid = Masjid::when($request->keyword, function ($query) use ($request) {
+
+            $query
+                ->where('name', 'like', "%{$request->keyword}%");
+        })->orderBy('created_at', 'desc')->paginate($pagination);
+
+        $masjid->appends($request->only('keyword'));
+
+        return view('admin.masjid.index', compact('page'), [
+            'masjid' => $masjid,
+
+        ])->with('i', ($request->input('page', 1) - 1) * $pagination);
+        // return view('admin.masjid.index', compact('page', 'masjid'));
     }
 
     //profil masjid

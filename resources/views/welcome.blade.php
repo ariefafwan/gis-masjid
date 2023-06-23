@@ -29,6 +29,18 @@
                         <p>Aplikasi pemetaan geografis Masjid di Kabupaten Aceh Tamiang, Masjid Yang Terdata :</p>
                         <div class="box">
                             <div class="box-body">
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <div class="d-flex justify-content-center">
+                                            <form action="{{ url()->current() }}" method="get">
+                                                <div class="input-group">
+                                                    <input class="form-control" type="search" name="keyword" value="{{ request('keyword') }}" placeholder="Search Data"> 
+                                                    <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Search!</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                                 <table id="category-table" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
@@ -55,6 +67,17 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="col-md-12 text-center">
+                                    <div class="text-center mb-3">
+                                        Halaman: {{ $masjid->currentPage() }}
+                                        <br>
+                                        Jumlah Data: {{ $masjid->total() }}
+                                        <br>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        {{ $masjid->links() }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
