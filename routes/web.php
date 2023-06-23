@@ -88,4 +88,6 @@ Route::middleware('auth')->group(function () {
     // Route::post('/pimpinan/edit/{id}/destroy', [AdminController::class, 'destroypimpinan'])->name('dpimpinan');
     //json
     Route::get('getmasjid/masjid', [AdminController::class, 'masjid']);
+    //excel
+    Route::get('/export/masjid', [AdminController::class, 'exportexcel'])->name('masjid.export');
 });

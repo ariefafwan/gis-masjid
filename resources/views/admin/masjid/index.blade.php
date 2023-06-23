@@ -5,8 +5,9 @@
 <section class="content">
     <div class="row">
         <div class="col-md-8">
-            <div class="btn-group mb-3">
-                <a href="{{ route('createmasjid') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> CREATE NEW</a>
+            <div class="mb-3">
+                <a href="{{ route('createmasjid') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i>&nbspCREATE NEW</a>
+                <a href="{{ route('masjid.export') }}" class="btn btn-success" target="_blank"><i class="bi bi-cloud-arrow-down"></i>&nbspDownload/Export</a>
             </div>
         </div>
         <div class="col-md-4">
