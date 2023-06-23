@@ -11,7 +11,7 @@ class MasjidExport implements FromView
     public function view(): View
     {
         return view('admin.masjid.export.masjid', [
-            'gejala' => Masjid::all()
+            'masjid' => Masjid::all()
         ]);
     }
 }
