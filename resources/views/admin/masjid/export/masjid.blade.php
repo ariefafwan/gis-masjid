@@ -3,6 +3,7 @@
     <tr>
         <th>No</th>
         <th>Nama Masjid</th>
+        <th>Sejarah Masjid</th>
         <th>Nama Pengurus</th>
         <th>Tahun Berdirinya</th>
         <th>Status Masjid </th>
@@ -23,6 +24,15 @@
         <tr>
             <th>{{ $loop->iteration }}</th>
             <td>{{ $m->name }}</td>
+            <td>
+                @foreach ($sejarah as $item)
+                @if ($item->masjid_id == $row->id)
+                <ul>
+                    <li>{{ $item->sejarah }}</li>
+                </ul>
+                @endif
+                @endforeach
+            </td>
             <td>{{ $m->namapengurus }}</td>
             <td>{{ $m->berdirinya }}</td>
             <td>{{ $m->statusmasjid }}</td>
