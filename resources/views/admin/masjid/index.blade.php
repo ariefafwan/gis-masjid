@@ -3,8 +3,20 @@
 @section('body')
 
 <section class="content">
-    <div class="btn-group mb-3">
-        <a href="{{ route('createmasjid') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> CREATE NEW</a>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="btn-group mb-3">
+                <a href="{{ route('createmasjid') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> CREATE NEW</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <form action="{{ url()->current() }}" method="get">
+            <div class="input-group">
+                <input class="form-control" type="search" name="keyword" value="{{ request('keyword') }}" placeholder="Search Data"> 
+                <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Search!</button>
+            </div>
+            </form>									
+        </div>
     </div>
     
     <div class="row">
@@ -51,9 +63,17 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <div class="d-flex justify-content-center">
-                        {{ $masjid->links() }}
-                </div>
+                    <div class="col-md-12 text-center">
+                        <div class="text-center mb-3">
+                            Halaman: {{ $masjid->currentPage() }}
+                            <br>
+                            Jumlah Data: {{ $masjid->total() }}
+                            <br>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            {{ $masjid->links() }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
