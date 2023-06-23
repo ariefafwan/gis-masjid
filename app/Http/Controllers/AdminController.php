@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\MasjidExport;
 use App\Models\Fasilumum;
 use App\Models\Foto;
 use App\Models\Masjid;
@@ -10,6 +11,7 @@ use App\Models\Video;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminController extends Controller
@@ -396,5 +398,10 @@ class AdminController extends Controller
 
         Alert::success('Informasi Pesan!', 'Video Berhasil dihapus!');
         return back();
+    }
+
+    public function exportexcel()
+    {
+        return Excel::download(new MasjidExport, 'daftarmasjid.xlsx');
     }
 }
