@@ -21,7 +21,11 @@
                 </div>
                 <div class="form-group">
                     <label for="berdirinya">Tahun Berdirinya Masjid</label>
-                    <input type="date" name="berdirinya" class="form-control" id="berdirinya" required>
+                    <select class="form-select" id="berdirinya" aria-label="Default select example" name="berdirinya" required>>
+                        @for ($year= $tahunnow; $year >= 1980; $year--)
+                        <option value="{{ $year }}" @if ($masjid->berdirinya == $year) selected @endif>{{ $year }}</option>
+                        @endfor
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="namapengurus">Nama Pengurus Masjid</label>
@@ -30,11 +34,13 @@
                 <div class="form-group">
                     <label for="statusmasjid">Status Masjid</label>
                     <select class="form-select" id="statusmasjid" aria-label="Default select example" name="statusmasjid" required>
-                        <option selected value="{{ $masjid->statusmasjid }}">{{ $masjid->statusmasjid }}</option>
-                        <option value="Aktif">Aktif</option>
-                        <option value="Dalam Pembangunan">Dalam Pembangunan</option>
-                        <option value="Tahap Renovasi">Tahap Renovasi</option>
+                        <option value="Aktif" @if ($masjid->statusmasjid == 'Aktif') selected @endif>Aktif</option>
+                        <option value="Dalam Pembangunan" @if ($masjid->statusmasjid == 'Dalam Pembangunan') selected @endif>Dalam Pembangunan</option>
+                        <option value="Tahap Renovasi" @if ($masjid->statusmasjid == 'Tahap Renovasi') selected @endif>Tahap Renovasi</option>
                     </select>
+                </div>
+                <div id="json">
+
                 </div>
                 <div class="form-group">
                     <label for="alamat">Alamat Masjid</label>
@@ -50,13 +56,12 @@
                 </div>
                 <div class="form-group">
                     <label for="statustanah">Status Tanah</label>
-                    <select class="form-select" id="statustanah" aria-label="Default select example" name="statustanah" required>
-                        <option selected value="{{ $masjid->statustanah }}">{{ $masjid->statustanah }}</option>
-                        <option value="Hibah">Hibah</option>
-                        <option value="Wakaf">Wakaf</option>
-                        <option value="Beli">Beli</option>
-                        <option value="Pinjam Pakai">Pinjam Pakai</option>
-                        <option value="Girik">Girik</option>
+                    <select class="form-select" id="statustanah" aria-label="Default select example" name="statustanah" required>                        
+                        <option value="Hibah" @if ($masjid->statustanah == 'Hibah') selected @endif>Hibah</option>
+                        <option value="Wakaf" @if ($masjid->statustanah == 'Wakaf') selected @endif>Wakaf</option>
+                        <option value="Beli" @if ($masjid->statustanah == 'Beli') selected @endif>Beli</option>
+                        <option value="Pinjam Pakai" @if ($masjid->statustanah == 'Pinjam Pakai') selected @endif>Pinjam Pakai</option>
+                        <option value="Girik" @if ($masjid->statustanah == 'Girik') selected @endif>Girik</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -70,12 +75,11 @@
                 <div class="form-group">
                     <label for="pembangunan">Skala Pembangunan (%)</label>
                     <select class="form-select" id="pembangunan" aria-label="Default select example" name="pembangunan" required>
-                        <option selected value="{{ $masjid->pembangunan }}">{{ $masjid->PembangunanName }}</option>
-                        <option value="#8B0000">1-20</option>
-                        <option value="#FF4500">21-40</option>
-                        <option value="#FFFF00">41-60</option>
-                        <option value="#00FF7F">61-80</option>
-                        <option value="#006400">81-100</option>
+                        <option class="text-white" style="background-color: #8B0000" value="#8B0000" @if ($masjid->PembangunanName == '1-20') selected @endif>1-20</option>
+                        <option class="text-white" style="background-color: #FF4500" value="#FF4500" @if ($masjid->PembangunanName == '21-40') selected @endif>21-40</option>
+                        <option style="background-color: #FFFF00" value="#FFFF00" @if ($masjid->PembangunanName == '41-60') selected @endif>41-60</option>
+                        <option style="background-color: #00FF7F" value="#00FF7F" @if ($masjid->PembangunanName == '61-80') selected @endif>61-80</option>
+                        <option class="text-white" style="background-color: #006400" value="#006400" @if ($masjid->PembangunanName == '81-100') selected @endif>81-100</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -89,6 +93,7 @@
                 <div class="form-group">
                     <label for="geojson">File GeoJSON</label>
                     <input type="file" id="geojson" name="geojson" class="form-control align-item center" required>
+                    <input type="hidden" value="{{ $masjid->geojson }}" name="oldgeo" id="oldgeo">
                 </div>
                 <div class="box-footer mt-2">
                     <a href="{{ route('masjid') }}" class="btn btn-danger btn-flat">
@@ -108,4 +113,28 @@
 </div>
 <!-- End of Main Content -->
 </section>
+@endsection
+@section('js')
+{{-- <script>
+    $.getJSON("{{ $masjid->FileGeo }}", function(data) {
+                
+                var json = [];
+                json.push(data);
+
+                // Get a reference to our file input
+                const fileInput = document.querySelector('input[type="file"]');
+
+                const oldGeo = document.getElementById("oldgeo").value;
+                // Create a new File object
+                const myFile = new File([json], oldGeo, {
+                    type: 'text/plain',
+                });
+                console.log(json);
+
+                // Now let's create a DataTransfer to get a FileList
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(myFile);
+                fileInput.files = dataTransfer.files;
+            });
+</script> --}}
 @endsection

@@ -9,7 +9,7 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <!-- stylesheets -->
-    <script type="text/javascript" src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-3.7.0.min.js"></script>
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"> --}}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
@@ -91,6 +91,43 @@
         .kotak {
             display: inline-block;
         }
+
+        /*Legend specific*/
+        .legend {
+        padding: 6px 8px;
+        font: 14px Arial, Helvetica, sans-serif;
+        background: white;
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        line-height: 24px;
+        color: #555;
+        }
+        .legend h4 {
+        text-align: left;
+        font-size: 12px;
+        margin: 2px 12px 8px;
+        color: #000000;
+        }
+
+        .legend span {
+        position: relative;
+        bottom: 3px;
+        }
+
+        .legend i {
+        width: 18px;
+        height: 18px;
+        float: left;
+        margin: 0 8px 0 0;
+        opacity: 0.7;
+        }
+
+        .legend i.icon {
+        background-size: 18px;
+        background-color: rgba(255, 255, 255, 1);
+        }
+
 /* 
         .overlay {
             position: fixed;
@@ -145,6 +182,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
         integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="{{ asset ('js/app.js') }}" defer></script>
     <script>
         $('#summernote').summernote({
@@ -162,6 +200,7 @@
           ]
         });
     </script>
+    @yield('js')
 </body>
 
 </html>
