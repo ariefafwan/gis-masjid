@@ -120,7 +120,7 @@
               <input type="hidden" class="longitude" id="longitude" value="{{ $masjid->longitude }}">
               <div class="row">
                 <div class="col-sm-12">
-                  <a class="btn btn-secondary" href="{{ route('editmasjid', $masjid->id) }}"><i class="bi bi-pencil-fill"></i> Edit</a>
+                  <a class="btn btn-secondary" href="{{ route('editmasjid', $masjid->id) }}"><i class="bi bi-pencil-fill"></i>&nbspEdit</a>
                 </div>
               </div>
             </div>

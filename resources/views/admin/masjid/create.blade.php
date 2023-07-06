@@ -1,7 +1,20 @@
 @extends('admin.app')
 
 @section('body')
+
 <hr>
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                alert()->error({{ $error }},'Lorem Lorem Lorem');
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <section class="content">
 <!-- Begin Page Content -->
 <div class="container-fluid">    
@@ -21,7 +34,12 @@
                 </div>
                 <div class="form-group">
                     <label for="berdirinya">Tahun Berdirinya Masjid</label>
-                    <input type="date" name="berdirinya" class="form-control" id="berdirinya" required>
+                    <select class="form-select" id="berdirinya" aria-label="Default select example" name="berdirinya" required>>
+                        <option selected>-- Pilih Tahun --</option>
+                        @for ($year= $tahunnow; $year >= 1980; $year--)
+                        <option value="{{ $year }}">{{ $year }}</option>
+                        @endfor
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="namapengurus">Nama Pengurus Masjid</label>
@@ -71,11 +89,11 @@
                     <label for="pembangunan">Skala Pembangunan (%)</label>
                     <select class="form-select" id="pembangunan" aria-label="Default select example" name="pembangunan" required>
                         <option selected>-- Pilih Skala Pembangunan --</option>
-                        <option value="#8B0000">1-20</option>
-                        <option value="#FF4500">21-40</option>
-                        <option value="#FFFF00">41-60</option>
-                        <option value="#00FF7F">61-80</option>
-                        <option value="#006400">81-100</option>
+                        <option class="text-white" style="background-color: #8B0000" value="#8B0000">1-20</option>
+                        <option class="text-white" style="background-color: #FF4500" value="#FF4500">21-40</option>
+                        <option style="background-color: #FFFF00" value="#FFFF00">41-60</option>
+                        <option style="background-color: #00FF7F" value="#00FF7F">61-80</option>
+                        <option class="text-white" style="background-color: #006400" value="#006400">81-100</option>
                     </select>
                 </div>
                 {{-- <div class="form-group">
