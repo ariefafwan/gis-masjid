@@ -103,7 +103,7 @@
                   <h6 class="mb-0">Skala Pembangunan</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ $masjid->PembangunanName }} %
+                  {{ $masjid->PembangunanName }}
                 </div>
               </div>
               <hr>

@@ -16,7 +16,7 @@
                 <input class="form-control" type="search" name="keyword" value="{{ request('keyword') }}" placeholder="Search Data"> 
                 <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Search!</button>
             </div>
-            </form>									
+            </form>
         </div>
     </div>
     
@@ -42,7 +42,7 @@
                                 <th align="center" scope="row">{{ $index + 1 }}</th>
                                 <td align="center">{{ $row->name }}</td>
                                 <td align="center">{{ $row->alamat }}</td>
-                                <td align="center">{{ $row->PembangunanName }} %</td>
+                                <td align="center">{{ $row->PembangunanName }}</td>
                                 <td align="center">{{ $row->latitude }}</td>
                                 <td align="center">{{ $row->longitude }}</td>
                                 <td align="center">

@@ -117,7 +117,7 @@
     //                     <option style="background-color: #00FF7F" value="#00FF7F">61-80</option>
     //                     <option class="text-white" style="background-color: #006400" value="#006400">81-100</option>
 
-    <?php foreach ($masjid as $key => $row) { ?>
+    <?php foreach ($peta as $key => $row) { ?>
         $.getJSON("storage/geojson/{{ $row->geojson }}", function(data) {
             geoLayer = L.geoJson(data, {
             style: function(feature) {
