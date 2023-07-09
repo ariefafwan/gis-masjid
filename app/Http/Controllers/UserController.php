@@ -16,6 +16,7 @@ class UserController extends Controller
         $page = "SIG MASJID";
         // $masjid = Masjid::all();
         $pagination  = 10;
+        $peta = Masjid::all();
         $masjid = Masjid::when($request->keyword, function ($query) use ($request) {
 
             $query
@@ -24,7 +25,7 @@ class UserController extends Controller
 
         $masjid->appends($request->only('keyword'));
 
-        return view('welcome', compact('page'), [
+        return view('welcome', compact('page', 'peta'), [
             'masjid' => $masjid,
 
         ])->with('i', ($request->input('page', 1) - 1) * $pagination);

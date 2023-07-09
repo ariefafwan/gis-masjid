@@ -89,11 +89,11 @@
                     <label for="pembangunan">Skala Pembangunan (%)</label>
                     <select class="form-select" id="pembangunan" aria-label="Default select example" name="pembangunan" required>
                         <option selected>-- Pilih Skala Pembangunan --</option>
-                        <option class="text-white" style="background-color: #8B0000" value="#8B0000">1-20</option>
-                        <option class="text-white" style="background-color: #FF4500" value="#FF4500">21-40</option>
-                        <option style="background-color: #FFFF00" value="#FFFF00">41-60</option>
-                        <option style="background-color: #00FF7F" value="#00FF7F">61-80</option>
-                        <option class="text-white" style="background-color: #006400" value="#006400">81-100</option>
+                        <option class="text-white" style="background-color: #8B0000" value="#8B0000">1-20 (Kurang Sekali)</option>
+                        <option class="text-white" style="background-color: #FF4500" value="#FF4500">21-40 (Kurang)</option>
+                        <option style="background-color: #FFFF00" value="#FFFF00">41-60 (Sedang/Cukup)</option>
+                        <option style="background-color: #00FF7F" value="#00FF7F">61-80 (Baik)</option>
+                        <option class="text-white" style="background-color: #006400" value="#006400">81-100 (Baik Sekali)</option>
                     </select>
                 </div>
                 {{-- <div class="form-group">

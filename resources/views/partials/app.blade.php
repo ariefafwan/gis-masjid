@@ -21,6 +21,7 @@
         <style>
             /*Legend specific*/
         .legend {
+        text-align: left;
         padding: 6px 8px;
         font: 14px Arial, Helvetica, sans-serif;
         background: white;
@@ -31,7 +32,6 @@
         color: #555;
         }
         .legend h4 {
-        text-align: left;
         font-size: 12px;
         margin: 2px 12px 8px;
         color: #000000;
@@ -80,7 +80,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
         {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> --}}
         <!-- Core theme JS-->
-        <script src="{{ asset ('js/scripts.js') }}"></script>
+        <script src="{{ asset ('js/script.js') }}"></script>
         @yield('js')
 </body>
 </html>

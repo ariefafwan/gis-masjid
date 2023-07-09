@@ -34,15 +34,15 @@ class Masjid extends Model
     {
         $pembangunan = $this->pembangunan;
         if ($pembangunan == "#8B0000") {
-            return '1-20';
+            return '1-20% (Kurang Sekali)';
         } elseif ($pembangunan == "#FF4500") {
-            return '21-40';
+            return '21-40% (Kurang)';
         } elseif ($pembangunan == "#FFFF00") {
-            return '41-60';
+            return '41-60% (Sedang/Cukup)';
         } elseif ($pembangunan == "#00FF7F") {
-            return '61-80';
+            return '61-80% (Baik)';
         }
-        return '81-100';
+        return '81-100% (Baik Sekali)';
 
         // $pembangunan = $this->pembangunan;
         // if ($pembangunan == "1-20") {
@@ -55,6 +55,21 @@ class Masjid extends Model
         //     return '#00FF7F';
         // }
         // return '#006400';
+    }
+
+    public function getPembangunanSkalaAttribute()
+    {
+        $pembangunan = $this->pembangunan;
+        if ($pembangunan == "#8B0000") {
+            return '1-20';
+        } elseif ($pembangunan == "#FF4500") {
+            return '21-40';
+        } elseif ($pembangunan == "#FFFF00") {
+            return '41-60';
+        } elseif ($pembangunan == "#00FF7F") {
+            return '61-80';
+        }
+        return '81-100';
     }
 
     public function getFileGeoAttribute()

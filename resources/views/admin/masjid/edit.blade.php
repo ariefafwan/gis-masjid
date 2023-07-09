@@ -75,11 +75,11 @@
                 <div class="form-group">
                     <label for="pembangunan">Skala Pembangunan (%)</label>
                     <select class="form-select" id="pembangunan" aria-label="Default select example" name="pembangunan" required>
-                        <option class="text-white" style="background-color: #8B0000" value="#8B0000" @if ($masjid->PembangunanName == '1-20') selected @endif>1-20</option>
-                        <option class="text-white" style="background-color: #FF4500" value="#FF4500" @if ($masjid->PembangunanName == '21-40') selected @endif>21-40</option>
-                        <option style="background-color: #FFFF00" value="#FFFF00" @if ($masjid->PembangunanName == '41-60') selected @endif>41-60</option>
-                        <option style="background-color: #00FF7F" value="#00FF7F" @if ($masjid->PembangunanName == '61-80') selected @endif>61-80</option>
-                        <option class="text-white" style="background-color: #006400" value="#006400" @if ($masjid->PembangunanName == '81-100') selected @endif>81-100</option>
+                        <option class="text-white" style="background-color: #8B0000" value="#8B0000" @if ($masjid->PembangunanSkala == '1-20') selected @endif>1-20 (Kurang Sekali)</option>
+                        <option class="text-white" style="background-color: #FF4500" value="#FF4500" @if ($masjid->PembangunanSkala == '21-40') selected @endif>21-40 (Kurang)</option>
+                        <option style="background-color: #FFFF00" value="#FFFF00" @if ($masjid->PembangunanSkala == '41-60') selected @endif>41-60 (Sedang/Cukup)</option>
+                        <option style="background-color: #00FF7F" value="#00FF7F" @if ($masjid->PembangunanSkala == '61-80') selected @endif>61-80 (Baik)</option>
+                        <option class="text-white" style="background-color: #006400" value="#006400" @if ($masjid->PembangunanSkala == '81-100') selected @endif>81-100 (Baik Sekali)</option>
                     </select>
                 </div>
                 <div class="form-group">
